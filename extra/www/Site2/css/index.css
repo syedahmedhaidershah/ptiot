@@ -1,0 +1,141 @@
+body{
+	background-color: #000;
+	color: #fff;
+	 font-family: proximaNova;
+}
+h3, a {
+	 font-family: proximaNova!important;
+}
+.inline-block{
+	display: inline-block!important;
+}
+.logo{
+	width: 200px !important;
+	height: 70px!important;
+	background: url('../img/logo.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.back-img{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+}
+
+.back-1{
+	z-index: -1;
+	background-color: rgba(0,0,0,0.5);
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-position: center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.back-2{
+	z-index: -2; 
+	background-image: url("../img/backs/881563d6444b370fa4ceea0c3183bb4c.gif");
+	opacity: 0.95;
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-position: center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.back-3{
+	z-index: -2; 
+	background-image: url("../img/backs/back2.gif");
+	opacity: 0.4;
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-position: center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.back-4{
+	z-index: -2; 
+	background-image: url("../img/backs/243345.jpg");
+	opacity: 0.2;
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-position: center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.back-pic{
+	height: 100%;
+}
+
+.back-web{
+	background-image: url("../img/services/web.svg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-background-size: 60%;
+	-moz-background-size: 60%;
+	-o-background-size: 60%;
+	background-size: 60%;
+}
+
+.back-code{
+	background-image: url("../img/services/code.svg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-background-size: 60%;
+	-moz-background-size: 60%;
+	-o-background-size: 60%;
+	background-size: 60%;
+}
+
+.back-paint{
+	background-image: url("../img/services/paint.svg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-background-size: 50%;
+	-moz-background-size: 50%;
+	-o-background-size: 50%;
+	background-size: 50%;
+}
+
+.back-home{
+	background-image: url("../img/services/home.svg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-background-size: 50%;
+	-moz-background-size: 50%;
+	-o-background-size: 50%;
+	background-size: 50%;
+}
+
+.back-mobile{
+	background-image: url("../img/services/mobile.svg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-background-size: 50%;
+	-moz-background-size: 50%;
+	-o-background-size: 50%;
+	background-size: 50%;
+}
+
+.back-smart{
+	background-image: url("../img/services/smart.svg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-background-size: 50%;
+	-moz-background-size: 50%;
+	-o-background-size: 50%;
+	background-size: 50%;
+}

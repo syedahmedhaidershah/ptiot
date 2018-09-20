@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>IoT Admin Panel</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="./assets/css/bootstrap-grid.min.css" />
+	<link rel="stylesheet" type="text/css" href="./assets/css/bootstrap-reboot.min.css" />
+	<link rel="stylesheet" type="text/css" href="./assets/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="./assets/css/index.css" />
+</head>
+<body>
+	<div class="main">
+		<div class="header col-lg-12 text-white p-2 pl-3">
+			Pulsate IoT Admin Panel
+		</div>
+		<div class="lower col-lg-12 p-1 pt-2 pb-2">
+			<div class="card col-lg-10 d-block mx-auto p-2">
+				<h6>Add Arduino</h6>
+                <form id="arduino-create-form" class="arduino-create-form">
+                    <input type="text" id="arduinoname" placeholder="Arduino's Name" class="p-1 w-25 arduinoname" />
+                    <button id="arduino-create-button" class="rounded btn-primary p-1 pl-3 pr-3 ml-2 border-0">Create</button>
+                    <button id="arduino-copy-button" class="rounded btn-success p-1 pl-3 pr-3 ml-1 border-0">Copy</button>
+                    <div id="arduino-success" class="ml-2 alert alert-success d-none">
+                        <strong>Success!</strong> Arduino device has been created.
+                    </div>
+                </form>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="./assets/js/jquery.js"></script>
+	<script type="text/javascript" src="./assets/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="./assets/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./assets/js/index.js"></script>
+</body>
+</html>
