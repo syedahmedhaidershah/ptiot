@@ -164,7 +164,7 @@ module.exports = function(app, db) {
 
 	app.get('*', (req, res) => {
 		res.send({
-			'error': true,
+			'error': false,
 			'message': 624,
 			'instance': 0
 		});
@@ -172,7 +172,7 @@ module.exports = function(app, db) {
 	
 	app.post('*', (req, res) => {
 		res.send({
-			'error': true,
+			'error': false,
 			'message': 624,
 			'instance': 1
 		});

@@ -1,0 +1,29 @@
+{
+  "name": "abot",
+  "version": "1.0.0",
+  "description": "arduino bot for development",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index"
+  },
+  "author": "Syed Ahmed Haider Shah",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syedahmedhaidershah/ptiot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/syedahmedhaidershah/ptiot/issues"
+  },
+  "homepage": "https://github.com/syedahmedhaidershah/ptiot#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "http": "0.0.0",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}
