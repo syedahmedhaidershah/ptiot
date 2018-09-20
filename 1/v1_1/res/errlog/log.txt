@@ -1,0 +1,25 @@
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\imports\err_catch.php" ] (line: 12) - 2 ->	Use of undefined constant dds - assumed 'dds' (this will throw an Error in a future version of PHP)
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\imports\checks.php" ] (line: 29) - 2 ->	count(): Parameter must be an array or an object that implements Countable
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 11) - 2 ->	Illegal string offset 'sid'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 12) - 2 ->	Illegal string offset 'reading'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 11) - 2 ->	Illegal string offset 'sid'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 12) - 2 ->	Illegal string offset 'reading'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 11) - 2 ->	Illegal string offset 'sid'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 12) - 2 ->	Illegal string offset 'reading'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 17) - 2 ->	mysqli_info() expects exactly 1 parameter, 0 given
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 11) - 2 ->	Illegal string offset 'sid'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 12) - 2 ->	Illegal string offset 'reading'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 11) - 2 ->	Illegal string offset 'sid'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 12) - 2 ->	Illegal string offset 'reading'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 11) - 2 ->	Illegal string offset 'sid'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 12) - 2 ->	Illegal string offset 'reading'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 11) - 2 ->	Illegal string offset 'sid'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 12) - 2 ->	Illegal string offset 'reading'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 11) - 2 ->	Illegal string offset 'sid'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 12) - 2 ->	Illegal string offset 'reading'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 11) - 2 ->	Illegal string offset 'sid'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 12) - 2 ->	Illegal string offset 'reading'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 11) - 2 ->	Illegal string offset 'sid'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 12) - 2 ->	Illegal string offset 'reading'
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 21) - 8 ->	Undefined variable: did
+[ "C:\xampp\htdocs\ptiot\api\1\v1_1\injects\set.php" ] (line: 20) - 8 ->	Undefined variable: did

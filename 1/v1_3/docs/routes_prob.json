@@ -1,0 +1,12 @@
+{
+	"routes" : [
+		{
+			"path" : "/feed/",
+			"method" : "POST",
+			"body" : {
+				"instance" : "ObjectID string in collection - instances"
+			},
+			"purpose" : ""
+		},
+	]
+}

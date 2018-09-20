@@ -1,0 +1,8 @@
+{
+	"624" : "No such routes exist",
+	"625" : "null encountered, no such document or entry exists",
+	"626" : "invalid token used",
+	"627" : "Undefined object",
+	"628" : "Undefined device offset",
+	"629" : "wrong command passed for device"
+}

@@ -1,0 +1,17 @@
+{
+	"result": { 
+		"ok": 1, 
+	"n": 1 
+},
+	"ops": [ 
+		{ 
+			"_id": "5b4623492675d90d2be6601c",
+		"count": 0, 
+	"rooms": [] 
+} 
+],
+	"insertedCount": 1,
+"insertedIds": [ 
+"5b4623492675d90d2be6601c" 
+] 
+}

@@ -1,0 +1,49 @@
+{
+	"errors" : {
+		"624" : {
+			"message" : "missing basic parameters",
+		},
+		"625" : {
+			"message" : "access tokens mismatch or lack",
+		},
+		"626" : {
+			"message" : "access request denied",
+		},
+		"627" : {
+			"message" : "invalid access request",
+		},
+		"628" : {
+			"message" : "ddos attack attempt",
+		},
+		"629" : {
+			"message" : "access parameters missing",
+		},
+		"630" : {
+			"message" : "access parameters are invalid",
+		},
+		"631" : {
+			"message" : "penetration attempt 1 blocked",
+		},
+		"632" : {
+			"message" : "penetration attempt 2 blocked",
+		},
+		"633" : {
+			"message" : "penetration attempt 3 blocked",
+		},
+		"634" : {
+			"message" : "penetration attempt 4 blocked",
+		},
+		"635" : {
+			"message" : "login information missing",
+		},
+		"636" : {
+			"message" : "login information is invalid",
+		},
+		"637" : {
+			"message" : "network is unaccessible or has been altered",
+		},
+		"638": {
+			"message" : "db remain unchanged",
+		}
+	}
+}

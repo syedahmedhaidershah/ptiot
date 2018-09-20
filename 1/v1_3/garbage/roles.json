@@ -1,0 +1,16 @@
+{
+    "roles" : [
+        {
+            "role" : "userAdminAnyDatabase",
+            "db" : "pulsate"
+        },
+        {
+            "role" : "dbAdminAnyDatabase",
+            "db" : "pulsate"
+        },
+        {
+            "role" : "readWriteAnyDatabase",
+            "db" : "pulsate"
+        }
+    ]
+}

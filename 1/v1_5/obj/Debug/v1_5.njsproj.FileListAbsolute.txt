@@ -1,0 +1,3 @@
+F:\backups\Repo\api\1\v1_5\obj\Debug\v1_5.njsprojAssemblyReference.cache
+F:\backups\Repo\api\1\v1_5\obj\Debug\v1_5.njsproj.CoreCompileInputs.cache
+F:\backups\Repo\api\1\v1_5\bin\Microsoft.NodejsTools.WebRole.dll
