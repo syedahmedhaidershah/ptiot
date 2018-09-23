@@ -15,7 +15,7 @@ const app            = express();
 const port 			 = 9899;
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({ limit: 1024 * 1024 * 20, type: 'application/json' }));
+app.use(bodyParser.json({ extended: true, limit: 20971520, type: 'application/json' }));
 
 MongoClient.connect(db.url, { useNewUrlParser: true }, (err, database) => {
  	if (err) return console.log(err);

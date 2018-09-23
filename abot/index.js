@@ -5,7 +5,8 @@ const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
 const arduino = '5b9bccbf65b3142c3c717d4e';
 
-port = 9899;
+const port = 9899;
+const httpIp = 'http://192.168.0.102';
 
 var initializer= false;
 var iterator = 0;
@@ -31,7 +32,7 @@ app.post("/update", (req, res) =>  {
 });
 
 var x = new XMLHttpRequest();
-x.open('POST', `http://192.168.0.102:${port}`, false);
+x.open('POST', `${httpIp}:${port}`, false);
 x.setRequestHeader('Content-Type', 'application/json');
 x.onreadystatechange = function(){
 	
@@ -42,17 +43,17 @@ x.onload = function(){
 x.onreadystatechange = function(){
 	if(x.readyState == 4 && x.status == 200){
 		if (!initializer) {
-		x.open('POST', `http://192.168.0.102:${port}/arduinoRegister`, false);
-		x.setRequestHeader('Content-Type', 'application/json');
-		x.send(JSON.stringify({"key":  arduino}));
-		initializer = true;
-	}
-	if(iterator%5000 == 0){
-		x.open('POST', `http://192.168.0.102:${port}/reviveArduino`, false);
-		x.setRequestHeader('Content-Type', 'application/json');
-		x.send(JSON.stringify({"key":  arduino}));
-	}
-	iterator++;
+			x.open('POST', `${httpIp}:${port}/arduinoRegister`, false);
+			x.setRequestHeader('Content-Type', 'application/json');
+			x.send(JSON.stringify({"key":  arduino}));
+			initializer = true;
+		}
+		if(iterator%5000 == 0){
+			x.open('POST', `${httpIp}:${port}/reviveArduino`, false);
+			x.setRequestHeader('Content-Type', 'application/json');
+			x.send(JSON.stringify({"key":  arduino}));
+		}
+		iterator++;
 	}
 }
-x.send();
+x.send('\n');
