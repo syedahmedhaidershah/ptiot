@@ -10,12 +10,15 @@ module.exports = function(app, db) {
 		var arKey = req.body.key;
 		if(arKey){
 			var rooms = db.collection("arduinos").findOne({_id : new ObjectID(arKey)}, (err, item) => {
+				console.log('zzz');
 				if(err){
+					console.log('ccc');
 					res.send({
 						error : true,
 						message : err
 					});
-				} else {		
+				} else {
+					console.log('ddd');
 					if(item && !item.relative){						
 						var newRoom = new ObjectID();
 						var globalPrefs = global.prefExtern.object;
@@ -164,17 +167,15 @@ module.exports = function(app, db) {
 
 	app.get('*', (req, res) => {
 		res.send({
-			'error': false,
-			'message': 624,
-			'instance': 0
+			error : false,
+			message : 'systemok. 200'
 		});
 	});
 	
 	app.post('*', (req, res) => {
 		res.send({
-			'error': false,
-			'message': 624,
-			'instance': 1
+			error : false,
+			message : 'systemok. 200'
 		});
 	});
 }
