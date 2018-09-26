@@ -3,37 +3,50 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 module.exports = function(ioClient, database){
     ioClient.on( global.prefExtern.object.instance , function (d) {
-        console.log(d);
        switch(d.forwarded){
             case "devicetoggled":
-                console.log(d);
-                break;
-            case "":
-                database.collection("arduinos").aggregate([
+                database.collection("rooms").aggregate([
                     {
                         $lookup: {
-                            from: "rooms",
-                            localField: "relative",
-                            foreignField: "_id",
-                            as: "a_field"
+                            from: "instances",
+                            localField: "parent",
+                            foreignField: "instances",
+                            as: "r_field"
                         }
                     },
                     {
                         $match: {
-                            "a_field._id" : ObjectId(d.roomid)
+                            "r_field._id" : ObjectId(d.id)
                         }
                     }
                 ]).toArray().then(function (o) {
-                    var thisRoom = null;
-                    if(global.rooms.hasOwnProperty(o[0]._id)){
-                        var jsonString = "command=updatesensor";
-                        var xhr = new XMLHttpRequest();
-                        
-                        thisRoom = global.rooms[o[0]._id];
-                        xhr.open('POST', "http://"+thisRoom.ip + "/update", true);
-                        xhr.send(jsonString);
-                    }
+                    database.collection("arduinos").aggregate([
+                        {
+                            $lookup: {
+                                from: "rooms",
+                                localField: "relative",
+                                foreignField: "_id",
+                                as: "a_field"
+                            }
+                        },
+                        {
+                            $match: {
+                                "a_field._id" : ObjectId(d.roomid)
+                            }
+                        }
+                    ]).toArray().then(function (o) {
+                        var thisRoom = null;
+                        if(global.rooms.hasOwnProperty(o[0]._id)){
+                            var jsonString = "command=updatesensor";
+                            var xhr = new XMLHttpRequest();
+                            
+                            thisRoom = global.rooms[o[0]._id];
+                            xhr.open('POST', "http://"+thisRoom.ip + "/update", true);
+                            xhr.send(jsonString);
+                        }
+                    });
                 });
+                
                 break;
             default:
                 break;
