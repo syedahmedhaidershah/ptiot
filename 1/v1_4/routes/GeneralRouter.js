@@ -65,6 +65,11 @@ module.exports = function (app, db) {
         var id = req.body._id;
         var myquery = { _id: ObjectId(id) };
         db.collection("devices").findOne(myquery, (err, item) => {
+            if (err) {
+                console.log(err); return false;
+            } else if (!item) {
+                console.log('item is null'); return false;
+            }
             var newvalues = { $set: { state: !item.state } };
             var currState = !item.state;
             db.collection("devices").updateOne(myquery, newvalues, (err, item) => {

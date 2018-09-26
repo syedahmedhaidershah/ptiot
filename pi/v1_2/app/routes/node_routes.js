@@ -10,15 +10,12 @@ module.exports = function(app, db) {
 		var arKey = req.body.key;
 		if(arKey){
 			var rooms = db.collection("arduinos").findOne({_id : new ObjectID(arKey)}, (err, item) => {
-				console.log('zzz');
 				if(err){
-					console.log('ccc');
 					res.send({
 						error : true,
 						message : err
 					});
 				} else {
-					console.log('ddd');
 					if(item && !item.relative){						
 						var newRoom = new ObjectID();
 						var globalPrefs = global.prefExtern.object;
@@ -37,9 +34,9 @@ module.exports = function(app, db) {
 											message : err
 										});
 									} else {
-										db.collection("arduinos").update({ _id : new ObjectID(arKey) } , { $set : { relative : new ObjectID(roomItem.insertedId) } } , (err, doneIns) => {
+										db.collection("arduinos").updateOne({ _id : new ObjectID(arKey) } , { $set : { relative : new ObjectID(roomItem.insertedId) } } , (err, doneIns) => {
 											if(err) {
-												console.log("err");
+												console.log(err);
 											} else {
 												jsonfile.readFile(roomLoc, (err, obj) => {
 													if(err){

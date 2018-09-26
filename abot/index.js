@@ -43,15 +43,15 @@ x.onload = function(){
 		x.send(JSON.stringify({"key":  arduino}));
 		initializer = true;
 	}
-	if(iterator%5000 == 0){
+	if(iterator%10 == 0){
 		x.open('POST', `${httpIp}:${port}/reviveArduino`, false);
 		x.send(JSON.stringify({"key":  arduino}));
 	}
 	iterator++;
 }
 x.onreadystatechange = function(){
-	if(x.readyState == 4 && x.status == 200){
-		console.log(x.responseText);
-	}
+	// if(x.readyState == 4 && x.status == 200){
+	// 	console.log(x.responseText);
+	// }
 }
 x.send(JSON.stringify({}));

@@ -1,4 +1,4 @@
-const ioHost = "http://192.168.1.5";
+const ioHost = "http://192.168.0.102";
 const iPort = 9997
 const io = require("socket.io-client"), ioClient = io.connect(ioHost + ":" + iPort);
 const express = require('express');
