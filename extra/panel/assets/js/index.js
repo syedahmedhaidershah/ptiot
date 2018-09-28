@@ -11,7 +11,7 @@ var iot = {
 		"arduino-create-form": null
 	},
     v: {
-        host : "http://192.168.0.103",
+        host : "http://192.168.1.103",
         port : 19988
 	},
 	x: {

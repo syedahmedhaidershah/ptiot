@@ -6,7 +6,7 @@ const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 const arduino = '5baa625cf762b02bd07ef8b9';
 
 const port = 9899;
-const httpIp = 'http://192.168.0.102';
+const httpIp = 'http://192.168.1.103';
 
 var initializer= false;
 var iterator = 0;
