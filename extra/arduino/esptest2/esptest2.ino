@@ -1,50 +1,26 @@
-#include <ArduinoJson.h>
-#include <ESP8266WiFi.h>
-#include <ESP8266HTTPClient.h>
-#include <ESP8266WebServer.h>
-
-String arduino = "5b97af2437ae2329d879fa0e";
-
-const char* ssid     = "Pulsate Technologies"; //AP Name (Server Name)
-const char* password = "pulsatemay24";  //Set wifi password
-
-bool initializer= false;
-int iterator = 0;
-
-HTTPClient http;
-ESP8266WebServer server;
-
-void handleRequest(){
-  if(server.args() > 0){
-    Serial.println(server.arg(0));
-  }
-  server.send(200, "application/json", "{\"msg\" : \"received.\"}");
-}
+#include <Wire.h>
 
 void setup() {
-  Serial.begin(9600);
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(100);
-  }
-  server.on("/", []() { server.send(200, "application/json", "{\"msg\" : \"systemok.\", \"key\":\""+arduino+"\"}"); });
-  server.on("/update", handleRequest);
-  server.begin();
+  Wire.begin(8);                /* join i2c bus with address 8 */
+  Wire.onReceive(receiveEvent); /* register receive event */
+  Wire.onRequest(requestEvent); /* register request event */
+  Serial.begin(9600);           /* start serial for debug */
 }
 
 void loop() {
-  server.handleClient();
-  if (!initializer) {
-    http.begin("192.168.0.100", 9999, "/arduinoRegister");
-    http.addHeader("Content-Type", "application/json");
-    http.POST("{\"key\":\""+arduino+"\"}");
-    initializer = true;
+  delay(100);
+}
+
+// function that executes whenever data is received from master
+void receiveEvent(int howMany) {
+  while (0 < Wire.available()) {
+    char c = Wire.read();      /* receive byte as a character */
+    Serial.print(c);           /* print the character */
   }
-  if(iterator%5000 == 0){
-    http.begin("192.168.0.100", 9999, "/reviveArduino");
-    http.addHeader("Content-Type", "application/json");
-    http.POST("{\"key\":\""+arduino+"\"}");
-  }
-  iterator++;
+  Serial.println();             /* to newline */
+}
+
+// function that executes whenever data is requested from master
+void requestEvent() {
+  Wire.write("Hello NodeMCU");  /*send string on request */
 }
