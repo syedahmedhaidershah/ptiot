@@ -14,7 +14,14 @@ int pirPin2 = 9;
 int ledPin = 13;
 
  
- 
+void onState(){
+  
+}
+
+void offState(){
+  
+}
+
 /////////////////////////////
 //SETUP
 void setup(){
@@ -36,21 +43,26 @@ void setup(){
 //LOOP
 void loop(){
  if(digitalRead(pirPin1) || digitalRead(pirPin2)){
-    if(digitalRead(pirPin1)){
+    if(digitalRead(pirPin1)){ 
       for(;digitalRead(pirPin1);){
+        onState();
         if(digitalRead(pirPin2)){
           Serial.println("coming in");
           delay(readPause);
         }
       }
     }
-   if(digitalRead(pirPin2)){
+   else if(digitalRead(pirPin2)){
     for(;digitalRead(pirPin2);){
       if(digitalRead(pirPin1)){
+        onState();
         Serial.println("going out");
         delay(readPause);
       }
     }
+   }
+   else {
+    offState();
    }
  }
 }

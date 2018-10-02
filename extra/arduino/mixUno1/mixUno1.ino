@@ -1,5 +1,6 @@
 #include <Wire.h>
 
+// energy management
 const int voltIn = A1;
 const int ampIn = A0;
 int mVperAmp = 66; // use 100 for 20A Module and 66 for 30A Module
@@ -13,6 +14,26 @@ double iHighest = 0, vHighest = 0;
 int iterator = 0, sample = 0;
 double vTemp = 0, iTemp = 0;
 
+// PIR management
+int calibrationTime = 15000;       
+long unsigned int lowIn;
+long unsigned int pause = 2500; 
+int readPause = 5000;
+ 
+int pirPin1 = 3;
+int pirPin2 = 9;
+int ledPin = 13;
+
+char buffer[48];
+ 
+void onState(){
+  Serial.println("Someone entered the room");
+}
+
+void offState(){
+  Serial.println("Someone left the room");
+}
+
 // function that executes whenever data is received from master
 void receiveEvent(int howMany) {
  while (0 <Wire.available()) {
@@ -24,8 +45,9 @@ void receiveEvent(int howMany) {
 
 // function that executes whenever data is requested from master
 void requestEvent() {
- String message = "{/"amps/":"+String(iHighest)+ ",/"volts/":"+vHighest+"}";
- Wire.write(message);  /*send string on request */
+ String message = "{\"amps\":"+String(iHighest)+ ",\"volts\":"+String(vHighest)+"}";
+ message.toCharArray(buffer, 32);
+ Wire.write(buffer);  /*send string on request */
 }
 
 void setup() {
@@ -33,9 +55,41 @@ void setup() {
   Wire.onReceive(receiveEvent); /* register receive event */
   Wire.onRequest(requestEvent); /* register request event */
   Serial.begin(9600);
+  pinMode(pirPin1, INPUT);
+  pinMode(pirPin2, INPUT);
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(pirPin1, LOW);
+ 
+  //give the sensor some time to calibrate
+  Serial.print("calibrating sensor ");
+  delay(calibrationTime);
+  Serial.println(" done");
+  Serial.println("SENSORS ACTIVE");
+  delay(50);
 }
 
 void loop() {
+  if(digitalRead(pirPin1) || digitalRead(pirPin2)){
+    if(digitalRead(pirPin1)){ 
+      for(;digitalRead(pirPin1);){
+        onState();
+        if(digitalRead(pirPin2)){
+          delay(readPause);
+        }
+      }
+    }
+   else if(digitalRead(pirPin2)){
+    for(;digitalRead(pirPin2);){
+      if(digitalRead(pirPin1)){
+        onState();
+        delay(readPause);
+      }
+    }
+   }
+   else {
+    offState();
+   }
+ }
   RawValue = analogRead(voltIn);
   sensorValue = analogRead(ampIn);
 

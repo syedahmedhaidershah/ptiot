@@ -5,6 +5,7 @@ module.exports = function(ioClient, database){
     ioClient.on( global.prefExtern.object.instance , function (d) {
        switch(d.forwarded){
             case "devicetoggled":
+                console.log(d);return false;
                 database.collection("rooms").aggregate([
                     {
                         $lookup: {
