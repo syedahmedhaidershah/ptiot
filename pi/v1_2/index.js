@@ -8,9 +8,8 @@ const roomLoc 		 = "./config/rooms.json";
 const ioHost 		 = "http://192.168.1.102";
 const iPort 		 = 9996;
 const io 			 = require("socket.io-client"), ioClient = io.connect(ioHost + ":" + iPort);
-global.socketHandler = null;
-
 const app            = express();
+global.socketHandler = null;
 
 const port 			 = 9899;
 

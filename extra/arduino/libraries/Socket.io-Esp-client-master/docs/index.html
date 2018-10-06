@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Socket.io Esp Client by Capdt</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="public/stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="public/stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Socket.io Esp Client</h1>
+      <h2 class="project-tagline">A socket.io client for the Esp 8266</h2>
+      <a href="https://github.com/Capdt/socket.io-esp-client" class="btn">View on GitHub</a>
+      <a href="https://github.com/Capdt/socket.io-esp-client/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/Capdt/socket.io-esp-client/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+<section class="main-content">
+      <h1>
+<a id="socketio-esp8266-client" class="anchor" href="#socketio-esp8266-client" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SocketIO Esp8266 Client</h1>
+
+<h4>
+<a id="an-esp-client-for-connecting-and-messaging-with-socketio-servers-over-https" class="anchor" href="#an-esp-client-for-connecting-and-messaging-with-socketio-servers-over-https" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>an esp client for connecting and messaging with Socket.io servers over https.</h4>
+
+<p>This implementation is derived from <a href="https://github.com/billroy/socket.io-arduino-client">Bill Roy</a> and <a href="https://github.com/washo4evr/Socket.io-v1.x-Library">washo4evr</a> Work you should check out there libraries. the major difference is that this library is implemented using HTTPS instead of HTTP because it's 2016 <g-emoji alias="stuck_out_tongue" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f61b.png" ios-version="6.0">😛</g-emoji> </p>
+
+<hr>
+
+<h2>
+<a id="there-are-2-examples-included-in-this-repository" class="anchor" href="#there-are-2-examples-included-in-this-repository" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>There are 2 examples included in this repository</h2>
+
+<ul>
+<li>esp_client  <em>travis build script in the works</em> :simple_smile:</li>
+<li>socket_io_server  <a href="https://travis-ci.org/Capdt/socket.io-esp-client"><img src="https://travis-ci.org/Capdt/socket.io-esp-client.svg?branch=master" alt="Build Status"></a>
+</li>
+</ul>
+
+<h3>
+<a id="note" class="anchor" href="#note" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Note</h3>
+
+<p>This library is not yet complete But it's features currently supports 2 way communication between the client and server.</p>
+
+<h3>
+<a id="installation-instructions" class="anchor" href="#installation-instructions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation Instructions</h3>
+
+<p>Clone this repository into your Ardunio Sketchbook directory under libraries, then restart the Ardunio IDE so that it notices the new library.  Now, under File\Examples you should see SocketIOClientSecure.
+You can run the esp_client with the node server running to test out the implementation.
+The server server a page to your local host that displays the messages being received form the Esp8266 you can view the page by going to the local host and the port you selected when running the server</p>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-c1">cd</span> .../.../socket_io_server
+npm install         <span class="pl-cce">\\</span>Install the dependencies
+node index -p 3000  <span class="pl-cce">\\</span>Serve application on port 3000 or any other port you like </pre></div>
+
+<p><em>Note if you change the port number you have to change the port on the esp_client if you plan to run the sketch.</em></p>
+
+<h2>
+<a id="how-to-use-this-library" class="anchor" href="#how-to-use-this-library" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How To Use This Library</h2>
+
+<h3>
+<a id="sending-data-to-the-server" class="anchor" href="#sending-data-to-the-server" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sending data to the server</h3>
+
+<p>To send a message to the server you can use any of this methods, the RID specifies the identifier of the event the socket server listens too, 
+Rname is the key and Rcontent is the value of the json object that will be sent.</p>
+
+<div class="highlight highlight-source-c++"><pre><span class="pl-c">//Sending data to the server</span>
+<span class="pl-k">void</span> <span class="pl-en">send</span>(String RID, String Rname, String Rcontent);
+<span class="pl-k">void</span> <span class="pl-en">sendJSON</span>(String RID, String JSON);</pre></div>
+
+<p>In this case the <code>RID='device status'</code> and the <code>{Rname: "Rcontent"}</code> will be the <code>data</code> that is received.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">io</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">'</span>connection<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">socket</span>) {
+    <span class="pl-smi">socket</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">'</span>device status<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">data</span>) {
+        <span class="pl-k">...</span>
+        <span class="pl-k">...</span>
+    }
+}
+</pre></div>
+
+<h3>
+<a id="reading-data-from-the-server" class="anchor" href="#reading-data-from-the-server" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reading data from the server</h3>
+
+<p>This variables are shared across the Sketch. when data is sent from the server the the monitor and parser method in the libiary capture the following information</p>
+
+<ul>
+<li>RID: the the id of the event, </li>
+<li>Rname and Rcontent the key and value pair of the data sent. </li>
+</ul>
+
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">extern</span> String RID;
+<span class="pl-k">extern</span> String Rname;
+<span class="pl-k">extern</span> String Rcontent;</pre></div>
+
+<h2>
+<a id="node-snippet-sends-a-status-ping-to-the-esp" class="anchor" href="#node-snippet-sends-a-status-ping-to-the-esp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Node snippet, Sends a status ping to the esp</h2>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">...</span>
+<span class="pl-k">...</span>
+sendPing <span class="pl-k">=</span> <span class="pl-c1">setInterval</span>(<span class="pl-k">function</span> () {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>emitting message...<span class="pl-pds">"</span></span>);
+    <span class="pl-smi">io</span>.<span class="pl-en">emit</span>(<span class="pl-s"><span class="pl-pds">'</span>server status<span class="pl-pds">'</span></span>, {
+        status<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>100<span class="pl-pds">'</span></span>
+    });
+}, <span class="pl-c1">1000</span>);
+<span class="pl-k">...</span>
+<span class="pl-k">...</span>
+</pre></div>
+
+<h2>
+<a id="sample-sketch-prints-the-rid-rname-and-rcontent-sent-from-the-server" class="anchor" href="#sample-sketch-prints-the-rid-rname-and-rcontent-sent-from-the-server" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample Sketch, Prints the RID, Rname and Rcontent sent from the server.</h2>
+
+<p><em>This also send a ping to the server every 10 seconds</em></p>
+
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">void</span> <span class="pl-en">loop</span>(){ 
+    ...
+    ...
+    <span class="pl-k">if</span> (socketIOClient.<span class="pl-c1">monitor</span>())
+    {
+        Serial.<span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">"</span>RID: <span class="pl-pds">"</span></span>);
+        Serial.<span class="pl-c1">print</span>(RID);
+        Serial.<span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">"</span>, Rname: <span class="pl-pds">"</span></span>);
+        Serial.<span class="pl-c1">print</span>(Rname);
+        Serial.<span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">"</span>, Rcontent: <span class="pl-pds">"</span></span>);
+        Serial.<span class="pl-c1">println</span>(Rcontent+<span class="pl-s"><span class="pl-pds">"</span> .<span class="pl-pds">"</span></span>);
+        <span class="pl-c">//Send ping to server</span>
+        <span class="pl-k">if</span> ((<span class="pl-c1">millis</span>() - now) &gt; <span class="pl-c1">10000UL</span>) {
+            now = <span class="pl-c1">millis</span>();
+            Serial.<span class="pl-c1">println</span>(<span class="pl-s"><span class="pl-pds">"</span>Sending ping to server...<span class="pl-pds">"</span></span>);
+            socketIOClient.<span class="pl-c1">send</span>(<span class="pl-s"><span class="pl-pds">"</span>device status<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>status<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>100<span class="pl-pds">"</span></span>);
+        }
+        socketIOClient.<span class="pl-c1">send</span>(<span class="pl-s"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Power<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>off<span class="pl-pds">"</span></span>);
+    }
+    <span class="pl-k">else</span> <span class="pl-k">if</span>(!socketIOClient.<span class="pl-c1">connected</span>()) {
+
+        socketIOClient.<span class="pl-c1">connect</span>(server, httpPort);
+    }
+}
+</pre></div>
+
+<h2>
+<a id="sample-output" class="anchor" href="#sample-output" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample Output</h2>
+
+<pre><code>RID: server status, Rname: status, Rcontent: 100 .
+</code></pre>
+
+<p>Made with <g-emoji alias="heart" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/2764.png" ios-version="6.0">❤️</g-emoji></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/Capdt/Socket.io-Esp-client">Socket.io Esp Client</a> is maintained by <a href="https://github.com/Capdt">Capdt</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>

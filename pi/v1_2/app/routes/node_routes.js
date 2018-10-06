@@ -6,6 +6,15 @@ const socketsCount = 8;
 const dimmable = socketsCount - 2;
 
 module.exports = function(app, db) {
+	app.get('/test/key/:arduino', (req, res) => {
+		console.log(req.params.arduino);
+		res.send("received");
+	});
+
+	app.get('*', (req,res) => {
+		console.log('e');
+		res.sendStatus(200);
+	})
 	app.post('/arduinoRegister', (req, res) => {
 		res.sendStatus(200);
 		var arKey = req.body.key;
@@ -101,7 +110,6 @@ module.exports = function(app, db) {
 	});
 
 	app.post("/reviveArduino", (req, res) => {
-		
 		res.sendStatus(200);
 		var arduinoIp = req.connection.remoteAddress.split("::ffff:")[1];
 		var arKey = req.body.key;

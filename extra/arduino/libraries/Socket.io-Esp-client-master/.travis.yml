@@ -1,0 +1,6 @@
+language: node_js
+dist: trusty
+node_js:
+    - '4'
+before_script:
+    - cd examples/socket_io_server
