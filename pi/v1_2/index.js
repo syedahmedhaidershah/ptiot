@@ -12,7 +12,7 @@ global.socketHandler = null;
 
 const app            = express();
 
-const port 			 = 9899;
+const port 			 = 9891;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ extended: true, limit: 20971520, type: 'application/json' }));
