@@ -7,6 +7,7 @@ const dimmable = socketsCount - 2;
 
 module.exports = function(app, db) {
 	app.post('/arduinoRegister', (req, res) => {
+		res.sendStatus(200);
 		var arKey = req.body.key;
 		if(arKey){
 			var rooms = db.collection("arduinos").findOne({_id : new ObjectID(arKey)}, (err, item) => {
@@ -100,6 +101,8 @@ module.exports = function(app, db) {
 	});
 
 	app.post("/reviveArduino", (req, res) => {
+		
+		res.sendStatus(200);
 		var arduinoIp = req.connection.remoteAddress.split("::ffff:")[1];
 		var arKey = req.body.key;
 		jsonfile.readFile(roomLoc, (err, obj) => {

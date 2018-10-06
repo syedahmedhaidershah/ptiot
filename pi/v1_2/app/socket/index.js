@@ -5,13 +5,13 @@ module.exports = function(ioClient, database){
     ioClient.on( global.prefExtern.object.instance , function (d) {
        switch(d.forwarded){
             case "devicetoggled":
-                console.log(d);return false;
+                console.log(d);
                 database.collection("rooms").aggregate([
                     {
                         $lookup: {
                             from: "instances",
                             localField: "parent",
-                            foreignField: "instances",
+                            foreignField: "relative",
                             as: "r_field"
                         }
                     },
@@ -37,6 +37,8 @@ module.exports = function(ioClient, database){
                         }
                     ]).toArray().then(function (o) {
                         var thisRoom = null;
+                        console.log(o[0]);
+                        return false;
                         if(global.rooms.hasOwnProperty(o[0]._id)){
                             var jsonString = "command=updatesensor";
                             var xhr = new XMLHttpRequest();

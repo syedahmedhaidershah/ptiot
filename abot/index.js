@@ -1,12 +1,26 @@
+const testFolder = './';
+const fs = require('fs');
+const r = new RegExp(/[.][n][o][d][e][-][x][m][l][h][t][t][p][r][e][q][u][e][s][t][-][s][y][n][c][-]/);
+
+function delxhrs(){
+	fs.readdir(testFolder, (err, files) => {
+	  files.forEach(file => {
+	  	if(r.test(file)){
+	  		fs.unlink(file, console.log(`Deleted files - ${file}`));
+	  	}
+	  });
+	});
+}
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
-const arduino = '5baa625cf762b02bd07ef8b9';
+const arduino = '5bb7759836afc323c82c2ffc';
 
 const port = 9899;
-const httpIp = 'http://192.168.1.103';
+const httpIp = 'http://192.168.1.102';
 
 var initializer= false;
 var iterator = 0;
@@ -31,6 +45,7 @@ app.post("/update", (req, res) =>  {
 	});
 });
 
+delxhrs();
 var x = new XMLHttpRequest();
 x.open('POST', `${httpIp}:${port}`, false);
 x.setRequestHeader('Content-Type', 'application/json');

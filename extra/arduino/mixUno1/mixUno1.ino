@@ -1,4 +1,15 @@
+#include <ArduinoJson.h>
 #include <Wire.h>
+
+//buffers
+StaticJsonBuffer<200> jsonBuffer;
+char json[] = "{}";
+int wit = 0;
+
+// automation
+const int relay1 = 22;
+const int relay2 = 23;
+const int relay3 = 24;
 
 // energy management
 const int voltIn = A1;
@@ -20,9 +31,8 @@ long unsigned int lowIn;
 long unsigned int pause = 2500; 
 int readPause = 5000;
  
-int pirPin1 = 3;
-int pirPin2 = 9;
-int ledPin = 13;
+int pirPin1 = 5; // out
+int pirPin2 = 6; // in
 
 char buffer[48];
  
@@ -38,9 +48,11 @@ void offState(){
 void receiveEvent(int howMany) {
  while (0 <Wire.available()) {
     char c = Wire.read();      /* receive byte as a character */
-    Serial.print(c);           /* print the character */
-  }
- Serial.println();             /* to newline */
+    json[wit++] = c;
+ }
+ wit = 0;
+ JsonObject& root = jsonBuffer.parseObject(json);
+ Serial.println(json);
 }
 
 // function that executes whenever data is requested from master
@@ -57,7 +69,6 @@ void setup() {
   Serial.begin(9600);
   pinMode(pirPin1, INPUT);
   pinMode(pirPin2, INPUT);
-  pinMode(ledPin, OUTPUT);
   digitalWrite(pirPin1, LOW);
  
   //give the sensor some time to calibrate

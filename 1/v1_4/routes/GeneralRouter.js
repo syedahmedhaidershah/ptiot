@@ -64,14 +64,14 @@ module.exports = function (app, db) {
     app.post('/devices/toggle', (req, res) => {
         var id = req.body._id;
         var myquery = { _id: ObjectId(id) };
-        db.collection("devices").findOne(myquery, (err, item) => {
+        db.collection("devices").findOne(myquery, (err, devitem) => {
             if (err) {
                 console.log(err); return false;
-            } else if (!item) {
+            } else if (!devitem) {
                 console.log('item is null'); return false;
             }
-            var newvalues = { $set: { state: !item.state } };
-            var currState = !item.state;
+            var newvalues = { $set: { state: !devitem.state } };
+            var currState = !devitem.state;
             db.collection("devices").updateOne(myquery, newvalues, (err, item) => {
                 if (err) {
                     res.send({
@@ -121,7 +121,8 @@ module.exports = function (app, db) {
                                             forwarded: 'devicetoggled',
                                             error: false,
                                             device: id,
-                                            msg: item.state
+                                            msg: devitem.state,
+                                            room: c[0]._id
                                         }
                                     });
                                 }

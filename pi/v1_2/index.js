@@ -5,7 +5,7 @@ const db             = require('./config/db');
 const jsonfile		 = require('jsonfile');
 const prefLoc 		 = "./config/prefs.json";
 const roomLoc 		 = "./config/rooms.json";
-const ioHost 		 = "http://192.168.1.103";
+const ioHost 		 = "http://192.168.1.102";
 const iPort 		 = 9996;
 const io 			 = require("socket.io-client"), ioClient = io.connect(ioHost + ":" + iPort);
 global.socketHandler = null;

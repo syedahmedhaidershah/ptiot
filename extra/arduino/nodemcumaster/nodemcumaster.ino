@@ -4,7 +4,6 @@
 
 const char* ssid     = "Pulsate Technologies"; //AP Name (Server Name)
 const char* password = "pulsatemay24";  //Set wifi password
-const char* host = "http://192.168.4.1";  //Default IP of ESP8266
 HTTPClient http;
 
 String message = "";
@@ -34,7 +33,7 @@ void loop() {
       WiFi.begin(ssid, password);
       delay(500);
     } else {
-      http.begin("192.168.0.102", 9599, "/test/" + message);
+      http.begin("192.168.0.102", 9899, "/test/" + message);
       int httpCode1 = http.GET(); //get value
       delay(100);
     }
