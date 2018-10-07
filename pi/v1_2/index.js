@@ -11,7 +11,7 @@ const io 			 = require("socket.io-client"), ioClient = io.connect(ioHost + ":" +
 const app            = express();
 global.socketHandler = null;
 
-const port 			 = 9891;
+const port 			 = 9899;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ extended: true, limit: 20971520, type: 'application/json' }));
