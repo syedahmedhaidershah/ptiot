@@ -3,7 +3,7 @@
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WebServer.h>
 
-String arduino = "5bb8ce7b94d9bc10a085b633";
+String arduino = "5bb9da567969132fb02ae3ba";
 
 const char* ssid     = "Pulsate Technologies Node"; //AP Name (Server Name)
 const char* password = "pulsatemay24";  //Set wifi password
@@ -66,7 +66,7 @@ void loop() {
     iterator++;
   }
 
-  Wire.requestFrom(8, 13); /* request & read data of size 13 from slave */
+  Wire.requestFrom(21, 13); /* request & read data of size 13 from slave */
   while (Wire.available()) {
     char c = Wire.read();
     message += String(c);

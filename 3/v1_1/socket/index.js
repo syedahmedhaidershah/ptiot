@@ -8,7 +8,6 @@ module.exports = function (io) {
         });
     });
     io.on('forward', function(d){
-        console.log(d);
     	global.ioServer.sockets.emit( d.id, d.data);
 
     });

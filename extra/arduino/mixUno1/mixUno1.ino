@@ -43,7 +43,7 @@ void receiveEvent(int howMany) {
     char c = Wire.read();      /* receive byte as a character */
     json[wit++] = c;
  }
- wit = 0;
+ wit = 0;t
  JsonObject& root = jsonBuffer.parseObject(json);
  Serial.println(json);
 }
