@@ -17,6 +17,8 @@ int iterator = 0;
 
 String message = "";
 
+char buffer[48];
+
 void setup() {
   Serial.begin(115200); /* begin serial for debug */
   Wire.begin(D1, D2); /* join i2c bus with SDA=D1 and SCL=D2 of NodeMCU */
@@ -30,8 +32,9 @@ void setup() {
   });
   server.on("/update", HTTP_POST, []() {
     for (int i = 0; i < server.args(); i++) {
-      Serial.println(server.argName(i));
-      Serial.println(server.arg(i));
+      String paramMessage = "{\""+server.argName(i) + "\" : \""+server.arg(i)+"\"}";
+      paramMessage.toCharArray(buffer, 32);
+      Wire.write(buffer);  /*send string on request */
     }
     server.send(200, "text/plain", "system ok.");
   });
@@ -62,16 +65,11 @@ void loop() {
     }
     iterator++;
   }
-  
-  Wire.beginTransmission(8);
-  Wire.write("\0");
-  Wire.endTransmission();
 
   Wire.requestFrom(8, 13); /* request & read data of size 13 from slave */
   while (Wire.available()) {
     char c = Wire.read();
-    Serial.print(c);
-    message += c;
+    message += String(c);
     if (WiFi.status() != WL_CONNECTED) {
       WiFi.begin(ssid, password);
       delay(500);
@@ -81,6 +79,7 @@ void loop() {
       delay(100);
     }
   }
+  Serial.print(message);
   message = "";
   delay(10);
 }

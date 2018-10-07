@@ -1,5 +1,12 @@
 #include <ArduinoJson.h>
 #include <Wire.h>
+#include <SPI.h>
+
+// temperature
+#define MAX6675_CS   10
+#define MAX6675_SO   12
+#define MAX6675_SCK  13
+int temperature = 0;
 
 //buffers
 StaticJsonBuffer<200> jsonBuffer;
@@ -10,20 +17,6 @@ int wit = 0;
 const int relay1 = 22;
 const int relay2 = 23;
 const int relay3 = 24;
-
-// energy management
-const int voltIn = A1;
-const int ampIn = A0;
-int mVperAmp = 66; // use 100 for 20A Module and 66 for 30A Module
-int RawValue = 0;
-double sensorValue = 0;
-int ACSoffset = 2500;
-double Voltage = 0;
-double Amps = 0;
-double VeffD = 0, Veff;
-double iHighest = 0, vHighest = 0;
-int iterator = 0, sample = 0;
-double vTemp = 0, iTemp = 0;
 
 // PIR management
 int calibrationTime = 15000;       
@@ -57,13 +50,14 @@ void receiveEvent(int howMany) {
 
 // function that executes whenever data is requested from master
 void requestEvent() {
- String message = "{\"amps\":"+String(iHighest)+ ",\"volts\":"+String(vHighest)+"}";
- message.toCharArray(buffer, 32);
- Wire.write(buffer);  /*send string on request */
+  temperature = readThermocouple();
+  String message = "{\"temperature\":"+String(temperature)+"}";
+  message.toCharArray(buffer, 32);
+  Wire.write(buffer);  /*send string on request */
 }
 
 void setup() {
-  Wire.begin(8);                /* join i2c bus with address 8 */
+  Wire.begin(21);                /* join i2c bus with address 8 */
   Wire.onReceive(receiveEvent); /* register receive event */
   Wire.onRequest(requestEvent); /* register request event */
   Serial.begin(9600);
@@ -101,44 +95,38 @@ void loop() {
     offState();
    }
  }
-  RawValue = analogRead(voltIn);
-  sensorValue = analogRead(ampIn);
+}
 
-  Voltage = (RawValue / 1024.0) * 5000; // Gets you mV
-  Amps = ((Voltage - ACSoffset) / mVperAmp);
-  if (Amps > iHighest) {
-    iHighest = Amps;
-  }
+double readThermocouple() {
 
-  //  VeffD = sensorValue / sqrt(2);
-  //  Veff = (((VeffD-440.76)/-105.24)*-200.2)+210.2;
-
-  Veff = int(sensorValue - 511) * 2 - 7;
-  if (Veff <= 7 || Veff < 0) {
-    Veff = 0;
-  }
-  if (Veff > vHighest) {
-    vHighest = Veff;
-  }
-
-  if (iterator > 0 && iterator % 50 == 0) {
-    if (sample > 0 && sample % 40 == 0) {
-      iHighest = iTemp / 40;
-      vHighest = vTemp / 40;
-      //
-      vHighest = 0;
-      iHighest = 0;
-      iterator = 0;
-      vTemp = 0;
-      iTemp = 0;
-      sample = 0;
-    } else {
-      vTemp += vHighest;
-      iTemp += iHighest;
-      sample++;
-    }
-  }
-
-  iterator++;
+  uint16_t v;
+  pinMode(MAX6675_CS, OUTPUT);
+  pinMode(MAX6675_SO, INPUT);
+  pinMode(MAX6675_SCK, OUTPUT);
+  
+  digitalWrite(MAX6675_CS, LOW);
   delay(1);
+
+  // Read in 16 bits,
+  //  15    = 0 always
+  //  14..2 = 0.25 degree counts MSB First
+  //  2     = 1 if thermocouple is open circuit  
+  //  1..0  = uninteresting status
+  
+  v = shiftIn(MAX6675_SO, MAX6675_SCK, MSBFIRST);
+  v <<= 8;
+  v |= shiftIn(MAX6675_SO, MAX6675_SCK, MSBFIRST);
+  
+  digitalWrite(MAX6675_CS, HIGH);
+  if (v & 0x4) 
+  {    
+    // Bit 2 indicates if the thermocouple is disconnected
+    return NAN;     
+  }
+
+  // The lower three bits (0,1,2) are discarded status bits
+  v >>= 3;
+
+  // The remaining bits are the number of 0.25 degree (C) counts
+  return v*0.25;
 }
