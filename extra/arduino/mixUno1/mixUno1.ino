@@ -1,6 +1,13 @@
-#include <ArduinoJson.h>
-#include <Wire.h>
-#include <SPI.h>
+#include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
+#include <ESP8266WebServer.h>
+
+String dooruino = "5bc0ae383850912e247c9645";
+
+const char* ssid     = "Pulsate Technologies Node"; //AP Name (Server Name)
+const char* password = "pulsatemay24";  //Set wifi password
+HTTPClient http;
+ESP8266WebServer server;
 
 // temperature
 #define MAX6675_CS   10
@@ -12,11 +19,6 @@ int temperature = 0;
 StaticJsonBuffer<200> jsonBuffer;
 char json[] = "{}";
 int wit = 0;
-
-// automation
-const int relay1 = 22;
-const int relay2 = 23;
-const int relay3 = 24;
 
 // PIR management
 int calibrationTime = 15000;       
@@ -37,29 +39,7 @@ void offState(){
   Serial.println("Someone left the room");
 }
 
-// function that executes whenever data is received from master
-void receiveEvent(int howMany) {
- while (0 <Wire.available()) {
-    char c = Wire.read();      /* receive byte as a character */
-    json[wit++] = c;
- }
- wit = 0;t
- JsonObject& root = jsonBuffer.parseObject(json);
- Serial.println(json);
-}
-
-// function that executes whenever data is requested from master
-void requestEvent() {
-  temperature = readThermocouple();
-  String message = "{\"temperature\":"+String(temperature)+"}";
-  message.toCharArray(buffer, 32);
-  Wire.write(buffer);  /*send string on request */
-}
-
 void setup() {
-  Wire.begin(21);                /* join i2c bus with address 8 */
-  Wire.onReceive(receiveEvent); /* register receive event */
-  Wire.onRequest(requestEvent); /* register request event */
   Serial.begin(9600);
   pinMode(pirPin1, INPUT);
   pinMode(pirPin2, INPUT);
@@ -71,6 +51,17 @@ void setup() {
   Serial.println(" done");
   Serial.println("SENSORS ACTIVE");
   delay(50);
+
+  Serial.begin(115200); /* begin serial for debug */
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+  }
+  server.on("/", []() {
+    server.send(200, "application/json", "{\"msg\" : \"systemok.\", \"key\":\"" + dooruino + "\"}");
+  });
+  server.begin();
 }
 
 void loop() {

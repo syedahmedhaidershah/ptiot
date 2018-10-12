@@ -152,6 +152,9 @@ module.exports = function(app, db) {
 	});
 
 	app.post('/test', (req,res) => {
+		console.log(req.params);
+		console.log(req.body);
+		console.log(req.query);
 		res.sendStatus(200);
 	});
 
