@@ -328,6 +328,7 @@ module.exports = function (app, db) {
             }
         });
     })
+
     app.post('/control/ac/swing/horizontal_lower', (req, res) => {
         var id = req.body._id;
         var horizontal_lower = req.body.horizontal_lower;
@@ -353,6 +354,7 @@ module.exports = function (app, db) {
             }
         });
     })
+
     app.post('/', (req, res) => {
         res.send({
             error: true,
