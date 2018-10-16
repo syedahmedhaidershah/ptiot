@@ -3,6 +3,53 @@ var ObjectId = require('mongodb').ObjectID;
 // var devTypes = "config/devicetypes.json";
 
 module.exports = function (app, db) {
+    // route for logging in a user
+    app.post('/login/:username&:password', (req, res) => {
+        const username = req.body.username;
+        const password = req.body.password;
+        const uIns = { 'username': username };
+        db.collection('creds').findOne(uIns, (err, item) => {
+            if (item != null) {
+                if (err) {
+                    res.send({
+                        'error': true,
+                        'message': 0x00000001
+                    });
+                } else {
+                    var useDate = new Date();
+                    var itemId = item._id;
+                    var loggedIn = {
+                        '_id': new ObjectID(),
+                        'creator': itemId,
+                        'value': md5(itemId + useDate),
+                        'creation': useDate
+                    }
+                    db.collection('tokens').insert(loggedIn, (err, loggedInIns) => {
+                        if (err) {
+                            res.send({
+                                'error': true,
+                                'message': 625,
+                                'instance': 1
+                            });
+                        } else if (loggedInIns.insertedCount > 0) {
+                            loggedIn.msg = "success";
+                            res.send({
+                                error: false,
+                                message: loggedIn
+                            })
+                        }
+                    });
+                }
+            } else {
+                res.send({
+                    'error': true,
+                    'message': 625,
+                    'instance': 1
+                });
+            }
+        });
+    });
+
     // route for searching for a specific sensor
     app.post('/sensors/search', (req, res) => {
         var sensId = req.body._id;

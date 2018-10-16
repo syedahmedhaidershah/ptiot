@@ -4,8 +4,8 @@ var md5 = require('md5');
 module.exports = function(app, db) {
 	// route for logging in a user
 	app.post('/login/:username&:password', (req, res) => {
-		const username = req.params.username;
-		const password = req.params.password;
+		const username = req.body.username;
+		const password = req.body.password;
 		const uIns = { 'username': username };
 		db.collection('creds').findOne(uIns, (err, item) => {
 			if(item != null){

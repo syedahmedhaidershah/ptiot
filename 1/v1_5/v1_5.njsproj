@@ -17,6 +17,9 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Content Include="docs\error.json">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="package-lock.json" />
     <Content Include="package.json" />
     <Compile Include="garbage\cleaner\index.js">
@@ -35,6 +38,7 @@
     <Folder Include="config" />
     <Folder Include="garbage" />
     <Folder Include="garbage\cleaner\" />
+    <Folder Include="docs\" />
     <Folder Include="routes" />
     <Folder Include="socket" />
   </ItemGroup>
