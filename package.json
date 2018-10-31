@@ -1,0 +1,15 @@
+{
+  "name": "root",
+  "version": "1.0.0",
+  "description": "root mode for instances",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/syedahmedhaidershah/pulsatechs.git"
+  },
+  "author": "Syed Ahmed Haider Shah",
+  "license": "ISC"
+}

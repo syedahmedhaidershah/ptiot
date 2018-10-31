@@ -1,25 +1,24 @@
-var ObjectID = require('mongodb').ObjectID;
-var md5 = require('md5');
-var jsonfile = require('jsonfile');
+var ObjectID = require("mongodb").ObjectID;
+var md5 = require("md5");
+var jsonfile = require("jsonfile");
 const roomLoc = "config/rooms.json";
-const socketsCount = 8;
+const socketsCount = 6;
 const dimmable = socketsCount - 2;
 
 module.exports = function(app, db) {
 	
-	app.post('/arduinoRegister', (req, res) => {
-		res.sendStatus(200);
+	app.post("/arduinoRegister", (req, res) => {
 		var arKey = req.body.key;
 		if(arKey){
-			var rooms = db.collection("arduinos").findOne({_id : new ObjectID(arKey)}, (err, item) => {
+			// var rooms = 
+			db.collection("arduinos").findOne({_id : new ObjectID(arKey)}, (err, item) => {
 				if(err){
 					res.send({
 						error : true,
 						message : err
 					});
 				} else {
-					if(item && !item.relative){						
-						var newRoom = new ObjectID();
+					if(item && !item.relative){
 						var globalPrefs = global.prefExtern.object;
 						if(globalPrefs.network){
 							var extRooms = db.collection("rooms").find({parent : new ObjectID(globalPrefs.network)});
@@ -28,7 +27,7 @@ module.exports = function(app, db) {
 									_id : new ObjectID(),
 									room : "Room "+(c+1),
 									parent : new ObjectID(globalPrefs.network)
-								}
+								};
 								db.collection("rooms").insertOne(newRoom, (err, roomItem) => {
 									if(err){
 										res.send({
@@ -54,8 +53,8 @@ module.exports = function(app, db) {
 																name : "temperature",
 																value : 25,
 																parent: new ObjectID(arKey)
-															}
-															var newDevices = []
+															};
+															var newDevices = [];
 															db.collection("sensors").insertOne(tempSensor, (err, done) => {
 																if(err){
 																	console.log(err);
@@ -97,16 +96,17 @@ module.exports = function(app, db) {
 						}
 					}
 				}
-			})
+			});
 		}
-	});
-
-	app.post("/reviveArduino", (req, res) => {
 		res.sendStatus(200);
+	});
+	
+	app.post("/reviveArduino", (req, res) => {
 		var arduinoIp = req.connection.remoteAddress.split("::ffff:")[1];
 		var arKey = req.body.key;
 		jsonfile.readFile(roomLoc, (err, obj) => {
 			if(err){
+				res.sendStatus(500);
 				console.log(err);
 			} else {
 				if(obj.rooms.hasOwnProperty(arKey)){
@@ -114,7 +114,12 @@ module.exports = function(app, db) {
 						obj.rooms[arKey].ip = arduinoIp;
 						jsonfile.writeFile(roomLoc, obj, (err, res) => {
 							if(err){
+								res.sendStatus(500);
 								console.log(err);
+							} else {
+								if(res){
+									res.sendStatus(200);
+								}
 							}
 						});
 					}	
@@ -123,7 +128,7 @@ module.exports = function(app, db) {
 		});
 	});
 
-	app.post('/resetPi', (req, res) => {
+	app.post("/resetPi", (req, res) => {
 		var prefloc = "config/prefs.json";
 		jsonfile.writeFile(prefloc, {} , (err, res) => {
 			if(err){
@@ -141,8 +146,8 @@ module.exports = function(app, db) {
 					} else {
 						if(res){
 							res.send({
-								error: true,
-								message: err
+								error: false,
+								message: "Pi has been reset"
 							});
 						}
 					}
@@ -151,38 +156,62 @@ module.exports = function(app, db) {
 		});
 	});
 
-	app.post('/test', (req,res) => {
-		console.log(req.params);
-		console.log(req.body);
-		console.log(req.query);
+	app.post("/getstates", (req, res) => {
+		if(req.body.type == "controller"){
+			const key = req.body.key;
+			db.collection("arduinos").findOne({_id: ObjectID(key)}, (err, obj) => {
+				if(err){
+					res.sendStatus(404);
+				} else {
+					db.collection("devices").find({ parent: obj.relative, type: "dimmable"}).toArray().then(function(o){
+						if(o.length > 0){
+							let response = {};
+							let iterator = 0;
+							o.forEach(function(thisobj){
+								response[iterator.toString()] = parseInt(thisobj.name.split(" ")[1]);
+								iterator++;
+								response[iterator.toString()] = parseInt(thisobj.attr.current);
+								iterator++;
+							});
+							res.send(response);
+						} else {
+							res.sendStatus(404);
+						}
+					});
+				}
+			});
+		}
+	});
+
+	app.post("/test", (req,res) => {
 		res.sendStatus(200);
 	});
 
-	app.post('/', (req, res) => {
+	app.post("/", (req, res) => {
 		res.send({
 			error : false,
-			message : 'systemok. 200'
+			message : "systemok. 200"
 		});
 	});
 
-	app.get('/', (req, res) => {
+	app.get("/", (req, res) => {
 		res.send({
 			error : false,
-			message : 'systemok. 200'
+			message : "systemok. 200"
 		});
 	});
 
-	app.get('*', (req, res) => {
+	app.get("*", (req, res) => {
 		res.send({
 			error : false,
-			message : 'systemok. 200'
+			message : "systemok. 200"
 		});
 	});
 	
-	app.post('*', (req, res) => {
+	app.post("*", (req, res) => {
 		res.send({
 			error : false,
-			message : 'systemok. 200'
+			message : "systemok. 200"
 		});
 	});
-}
+};

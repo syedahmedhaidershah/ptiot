@@ -168,6 +168,7 @@ module.exports = function (app, db) {
                                             forwarded: 'devicetoggled',
                                             error: false,
                                             device: id,
+                                            switch: devitem.name.split(" ")[1],
                                             msg: devitem.state,
                                             room: c[0]._id
                                         }

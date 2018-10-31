@@ -14,6 +14,7 @@
 			Pulsate IoT Admin Panel
 		</div>
 		<div class="lower col-lg-12 p-1 pt-2 pb-2">
+			<div id="success-box" class="alert alert-success success-box col-md-10 d-block mx-auto inactive"></div>
 			<div class="card col-lg-10 d-block mx-auto p-2">
 				<h6>Add Arduino</h6>
 				<form id="arduino-create-form" class="arduino-create-form">
@@ -23,9 +24,6 @@
 					<input type="text" id="arduinoname" placeholder="Arduino's Name" class="p-1 w-25 arduinoname" />
 					<button id="arduino-copy-button" class="rounded btn-success p-1 pl-3 pr-3 ml-1 border-0">Copy</button>
 					<button id="arduino-create-button" class="rounded btn-primary p-1 pl-3 pr-3 ml-2 border-0">Create</button>
-					<div id="arduino-success" class="ml-2 alert alert-success d-none">
-						<strong>Success!</strong> Devices have been created.
-					</div>
 					<br>
 					<div class="col-md-1 d-inline-block">
 						<small class="text-secondary">Dooruino</small>
@@ -45,9 +43,6 @@
 					<input type="text" id="wifissid" placeholder="WiFi SSID" class="p-1 w-25 arduinoname" >
 					<button id="wifi-copy-ssid-button" class="rounded btn-success p-1 pl-3 pr-3 ml-1 border-0">Copy</button>
 					<button id="wifi-create-button" class="rounded btn-primary p-1 pl-3 pr-3 ml-2 border-0">Create</button>
-					<div id="wifi-success" class="ml-2 alert alert-success d-none">
-						<strong>Success!</strong> Devices have been created.
-					</div>
 					<br>
 					<div class="col-md-1 d-inline-block"></div>
 					<input type="text" id="wifipassword" placeholder="WiFi Password" class="p-1 w-25 arduinoname  mt-2" />

@@ -1,5 +1,6 @@
 var iot = {
 	e: {
+        "success-box": null,
         arduinoname: null,
         "arduino-create-button": null,
         "arduino-copy-button" : null,
@@ -63,9 +64,10 @@ var iot = {
                 var j = JSON.parse(iot.x["arduino-create"].responseText);
                 iot.e.arduinoname.value = j.message.arduino;
                 iot.e.dooruinoname.value = j.message.dooruino;
+                iot.e["success-box"].innerHTML = '<strong>Success!</strong> Devices have been created.';
                 if (j.error == false) {
-                    $("#arduino-success").addClass("d-inline");
-                    $("#arduino-success").removeClass("d-none");
+                    $(iot.e["success-box"]).removeClass("inactive");
+                    $(iot.e["success-box"]).addClass("active");
                 } else {
                     alert(j.message);
                 }
@@ -76,9 +78,10 @@ var iot = {
                 var j = JSON.parse(iot.x["wifi-create"].responseText);
                 iot.e.wifissid.value = j.message.ssid;
                 iot.e.wifipassword.value = j.message.password;
+                iot.e["success-box"].innerHTML = "<strong>Success!</strong> Wifi has been created."
                 if (j.error == false) {
-                    $("#wifi-success").addClass("d-inline");
-                    $("#wifi-success").removeClass("d-none");
+                    $(iot.e["success-box"]).removeClass("inactive");
+                    $(iot.e["success-box"]).addClass("active");
                 } else {
                     alert(j.message);
                 }

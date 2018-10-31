@@ -46,25 +46,25 @@ module.exports = function (app, db) {
         var wifiObj = (new ObjectID());
         var newWiFi = {
         	_id: wifiObj,
-        	ssid: md5(new Date().getTime() + wifiObj.toString()).substr(0,6),
-	        password: md5(new Date().getTime() + wifiObj.toString()).substr(7,12)
+        	ssid: null,
+	        password: null
 	    }
-	    while(newWifi == undefined || newWifi == null){
-	    }
-	    console.log(newWiFi);
-     //    db.collection("wifis").insertOne(newWifi, (err, inserted) => {
-     //        if (err) {
-     //            res.send({
-     //                error: true,
-     //                message: err
-     //            });
-     //        } else {
-     //        	res.send({
-     //        		error : false,
-     //        		message: newWifi
-     //        	})
-     //        }
-     //    });
+        let usedate = md5(new Date().getTime() + wifiObj.toString());
+	    newWiFi.ssid = usedate.substr(0,3).concat('-').concat(usedate.substr(3,4)).toUpperCase();
+        newWiFi.password = usedate.substr(-8).toUpperCase();
+        db.collection("wifis").insertOne(newWiFi, (err, inserted) => {
+            if (err) {
+                res.send({
+                    error: true,
+                    message: err
+                });
+            } else {
+            	res.send({
+            		error : false,
+            		message: newWiFi
+            	})
+            }
+        });
     });
 
 	app.post('/', (req, res) => {

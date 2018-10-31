@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [,
+                "C:\\Users\\Lenovo\\Documents\\Arduino\\libraries\\",
+                "C:\\Users\\Lenovo\\Documents\\Arduino\\libraries\\ArduinoJson\\src",
+                "C:\\Users\\Lenovo\\Documents\\Arduino\\libraries\\ArduinoJson",
+                "C:\\Users\\Lenovo\\AppData\\Local\\Arduino15",
+                "C:\\Users\\Lenovo\\AppData\\Local\\Arduino15\\packages\\esp8266\\tools\\**",
+                "C:\\Users\\Lenovo\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.4.1\\**",
+                "C:\\Users\\Lenovo\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.4.1\\libraries\\**",
+                "C:\\Users\\Lenovo\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.4.1\\libraries\\ESP8266WiFi\\src\\**"
+            ],
+            "forcedInclude": [],
+            "intelliSenseMode": "msvc-x64",
+            "compilerPath": "C:/mingw64/bin/gcc.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

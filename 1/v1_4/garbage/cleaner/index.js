@@ -48,9 +48,15 @@ function promptUser(rl, database) {
                                                                         if (err) {
                                                                             console.log(`\n${err}\n`);
                                                                         } else {
-                                                                            database.collection("arduinos").updateOne({ _id: ObjectId(answer) }, { $set: { relative: null } });
-                                                                            console.log("Done");
-                                                                            return false;
+                                                                            database.collection("dooruinos").deleteMany({}, (err, obj) => {
+                                                                                if (err) {
+                                                                                    console.log(`\n${err}\n`);
+                                                                                } else {
+                                                                                    database.collection("arduinos").updateOne({ _id: ObjectId(answer) }, { $set: { relative: null } });
+                                                                                    console.log("Done");
+                                                                                    return false;
+                                                                                }
+                                                                            });
                                                                         }
                                                                     });
                                                                 }
