@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<system>
+  <specs>
+    <spec id="device_types">
+      <device>Light</device>
+      <device>Fan</device>
+      <device>AC</device>
+      <device>Dimmable Light</device>
+    </spec>
+  </specs>
+  <ideas>
+    <idea>Pluto box sends an alert when opened</idea>
+    <idea>Prepaid electricity delivery system</idea>
+  </ideas>
+</system>

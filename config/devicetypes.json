@@ -1,0 +1,8 @@
+﻿{
+  "types": [
+    "light",
+    "fan",
+    "ac",
+    "dimmable light"
+  ]
+}
