@@ -1,0 +1,336 @@
+@font-face {
+    font-family: proximanova;
+    src: url('../fonts/proximaNovaRegular.ttf');
+}
+*, *:active, *:focus, button:focus{
+  font-family: proximanova;
+  user-select: none;
+  -webkit-touch-callout: none;
+  outline: none;
+  border:none;
+}
+.main-back{
+  z-index: 1;
+  background: url('../img/3.png');
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.main{
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    overflow-y: scroll;
+}
+.loader,
+.loader:before,
+.loader:after {
+  background: #ffffff;
+  -webkit-animation: load1 1s infinite ease-in-out;
+  animation: load1 1s infinite ease-in-out;
+  width: 1em;
+  height: 4em;
+}
+.loader {
+  color: #ffffff;
+  text-indent: -9999em;
+  margin: 0px auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 11px;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+.loader:before,
+.loader:after {
+  position: absolute;
+  top: 0;
+  content: '';
+}
+.loader:before {
+  left: -1.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.loader:after {
+  left: 1.5em;
+}
+@keyframes loader1{
+  33.33% { z-index: 1000; }
+  66.66% { z-index: 1001; }
+  100% { z-index: 1002; }
+}
+@keyframes loader2{
+  33.33% { z-index: 1001; }
+  66.66% { z-index: 1002; }
+  100% { z-index: 1000; }
+}
+@keyframes loader3{
+  33.33% { z-index: 1002; }
+  66.66% { z-index: 1000; }
+  100% { z-index: 1001; }
+}
+.l-1{
+  position: absolute;
+  z-index: 1000;
+  opacity: 0.85;
+  animation: loader1;
+  animation-duration: 1500ms;
+  animation-iteration-count: infinite;
+  background: url('../img/1.png');
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.l-2{
+  position: absolute;
+  z-index: 1001;
+  opacity: 0.85;
+  animation: loader2;
+  animation-duration: 1500ms;
+  animation-iteration-count: infinite;
+  background: url('../img/2.png');
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.l-3{
+  position: absolute;
+  z-index: 1002;
+  opacity: 0.85;
+  animation: loader3;
+  animation-duration: 1500ms;
+  animation-iteration-count: infinite;
+  background: url('../img/3.png');
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.loader-container{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
+    background: url('../img/3.png');
+    background-position: center;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    /* background: linear-gradient(#0089cf, #27a9ef); */
+}
+.vertical-scroll{
+    overflow-y: scroll;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-track {
+    background: #ccc; 
+}
+::-webkit-scrollbar-thumb {
+    background: #27a9cf; 
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #0089cf; 
+}
+.title-space{
+  max-height:20%;
+  font-size: 2rem;
+}
+.text-light-green{
+  color: #a5e048;
+}
+.header{
+  min-height: 7%;
+  max-height: calc( 15% + 100px );
+  background-color: #bfd7db;
+}
+.header-logo{
+  width: 80px;
+  padding-bottom: 80px;
+  background: url('../img/pluto_logo.png');
+  background-size: 80% 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.rooms-container{
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  width: 80%;
+  border-radius: 15px 0px 0px 15px;
+  max-height: 200px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.room{
+  border-radius: 10px;
+}
+.text-navy-blue{
+  color: #06577d;
+}
+.manage-button{
+  position: absolute;
+  z-index: 3;;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+}
+.back-security{
+  top: 30px;
+  left: calc( 25% - 17.5px );
+  background: url('../img/lock-9.png');
+  background-position: center;
+  background-size: 70%;
+  background-color: #464646;
+  background-repeat: no-repeat;
+  box-shadow: 2px 2px 25px -2px #000;
+}
+.back-doors{
+  top: 30px;
+  left: calc( 50% + 34px );
+  background: url('../img/open-exit-door.png');
+  background-position: center;
+  background-size: 70%;
+  background-color: #f7cd0a;
+  background-repeat: no-repeat;
+  box-shadow: 2px 2px 25px -2px #000;
+}
+.manage-label{
+  position: absolute;
+  top: 80px;
+  left:0px;
+}
+.manage-doors{
+  left:10px;
+}
+.socket-button{
+  position: absolute;
+  top: 470px;
+  left: 25%;
+  border-radius: 15px;
+  background-color: #27a9ef!important;
+  color: #fff!important;
+}
+.socket-button:active{
+  background-color: rgba(255,255,255,0.7)!important;
+  color: #044871!important;
+  box-shadow: 2px 2px 25px 0px #000;
+}
+.fan-thread-outer{
+  background-color: rgba(0,0,0,0.5);
+  transition: opacity 200ms;
+}
+.thread-outer{
+  top:0px;
+  left: 0px;
+  position: fixed;
+  z-index: -1;
+  opacity: 0;
+}
+.fan-thread{
+  position: absolute;
+  top:20%;
+  height: 60%;
+  left:10%;
+  width: 80%;
+  background-color: rgba(255,255,255,0.8);
+}
+.thread-outer.active{
+  z-index: 1011;
+  opacity: 1;
+}
+.fan-state-button{
+  position: relative;
+  height: 40px;
+  width: 90px;
+  border-radius: 20px;
+  background-color: #777;
+}
+.fan-state-button.active{
+  background-color: #10b610;
+}
+.fan-state-button .button-inner{
+  position: absolute;
+  top: 5px;
+  height: 30px;
+  width: 30px;
+  left: 5px;
+  border-radius: 15px;
+  background-color: #ccc;
+  transition: left 300ms;
+}
+.fan-state-button.active .button-inner{
+  top: 5px;
+  height: 30px;
+  width: 30px;
+  left: calc( 100% - 35px);
+}
+.togglebuttons{
+  background-color: #004e75;
+}
+.togglebuttons.active{
+  background-color: #fff;
+}
+.togglebuttons h5{
+  color: #fff;
+}
+.togglebuttons.active h5{
+  color:#004e75!important; 
+}
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    background: #999; /* Grey background */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 25px; /* Specified height */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+    tramsition: false 400ms;
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: rgb(238, 144, 2); /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: rgb(238, 144, 2); /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+.col-md-3{
+  width: 23.8%;
+}
+.video-container{
+  background-color: rgba(0,0,0,0.5);
+}
+.special-class-times{
+  position: absolute;
+  top: 10px;
+   right: 10px;
+   z-index: 1;
+}

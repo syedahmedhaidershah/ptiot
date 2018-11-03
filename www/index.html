@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <title>
+            Pluto Panel
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <link rel="stylesheet" type="text/css" href="./www/assets/css/bootstrap-grid.min.css" />
+        <link rel="stylesheet" type="text/css" href="./www/assets/css/bootstrap-reboot.min.css" />
+        <link rel="stylesheet" type="text/css" href="./www/assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="./www/assets/css/index.css" />
+    </head>
+    <body>
+        <div id="video-container" class="video-container h-100 w-100 thread-outer" >
+            <div class="container m-0 w-100">
+                <h2 class="float-right text-white font-weight-bold remove-active-times special-class-times">&times;</h2>
+            </div>
+            <video id="video" src="http://192.168.1.102:9499" type="" width="320" height="240" controls class="video d-block mx-auto mt-5"  webkit-playsinline="true"
+                playsinline="true"
+                autoplay="true">
+            </video>
+        </div>
+        <div class="main-back w-100 h-100 position-absolute"></div>
+        <header id="main" class="main w-100 h-100 position-absolute">
+            <div class="header">
+                <div class="header-logo"></div>
+            </div>
+            <div class="col-md-10 d-block mx-auto p-3">
+                <button id="manage-security" class="manage-button back-security border-0 d-inline-block"><div class="text-white manage-label">SECURITY</div></button>
+                <button id="manage-doors" class="manage-button back-doors border-0 d-inline-block"><div class="text-white manage-label manage-doors">DOORS</div></button>
+            </div>
+            <div class="rooms-container pb-3 pt-2 p-3 d-block mx-auto mb-2 mt-5 vertical-scroll">
+                <div class="room p-3 mt-2 togglebuttons">
+                    <h5 id="light-1" class="text-navy-blue font-weight-bold m-0 text-center">Light 1</h5>
+                </div>
+                <div class="room p-3 mt-2 togglebuttons">
+                    <h5 id="light-2" class="text-navy-blue font-weight-bold m-0 text-center">Light 2</h5>
+                </div>
+                <div class="room p-3 mt-2 togglebuttons">
+                    <h5 id="light-3" class="text-navy-blue font-weight-bold m-0 text-center">Light 3</h5>
+                </div>
+                <div class="room p-3 mt-2 togglebuttons">
+                    <h5 id="fan-1" class="text-navy-blue font-weight-bold m-0 text-center">Fan</h5>
+                </div>
+            </div>
+            <div id="fan-thread-outer" class="h-100 w-100 fan-thread-outer thread-outer">
+                <div class="fan-thread rounded">
+                    <h2 class="float-right pr-2 p-1 font-weight-bold remove-active-times">&times;</h2>
+                    <div class="m-3 p-3 w-100"></div>
+                    <div class="container">
+                        <label class="p-2 text-secondary">
+                            Fan's State:
+                        </label>
+                        <button id="fan-state-button" class="fan-state-button float-right">
+                            <div class="button-inner"></div>
+                        </button>
+                        <div class="p-3 w-100"></div>
+                        <div class="p-2 text-secondary">
+                            Fan's Speed:
+                        </div>
+                        <div class="slidecontainer">
+                            <input type="range" min="0" max="3" value="0" class="slider" id="fan-range">
+                        </div>
+                        <div class="container p-1 m-0">
+                            <div class="col-md-3 d-inline-block p-0 text-left font-weight-bold">0</div>
+                            <div class="col-md-3 d-inline-block text-center p-0 font-weight-bold">1</div>
+                            <div class="col-md-3 d-inline-block text-center p-0 font-weight-bold">2</div>
+                            <div class="col-md-3 d-inline-block p-0 text-right font-weight-bold">3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3 class="pt-2 pb-2 w-50 d-block mx-auto bg-white text-primary p-1 socket-button text-center mt-5">
+                Socket
+            </h3>
+        </header>
+        <div id="loader-container" class="loader-container w-100 h-100">
+            <div class="w-100 h-100 l-1"></div>
+            <div class="w-100 h-100 l-2"></div>
+            <div class="w-100 h-100 l-3"></div>
+        </div>
+        <script src="./www/assets/js/jquery.js"></script>
+        <script src="./www/assets/js/bootstrap.bundle.min.js"></script>
+        <script src="./www/assets/js/bootstrap.min.js"></script>
+        <script src="./www/assets/js/socket.io.js"></script>
+        <script src="./www/assets/js/index.js"></script>
+    </body>
+</html>
