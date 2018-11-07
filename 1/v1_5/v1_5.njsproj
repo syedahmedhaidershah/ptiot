@@ -25,6 +25,9 @@
     <Compile Include="garbage\cleaner\index.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="garbage\comment1.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="garbage\devtypechangeQuery.js">
       <SubType>Code</SubType>
     </Compile>

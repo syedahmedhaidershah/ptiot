@@ -1,1 +1,1 @@
-{"rooms":{"5bd8f81615e2e94948dfa01b":{"_id":"5bd8f897cf5464406001e210","room":"Room 1","parent":"5bd8f85b2c8ad829dcc3f091","ip":"192.168.1.100"}}}
+{"rooms":{"5bd8f81615e2e94948dfa01b":{"_id":"5bd8f897cf5464406001e210","room":"Room 1","parent":"5bd8f85b2c8ad829dcc3f091","ip":"192.168.1.100"},"5bda0d7b15187f271c259f40":{"_id":"5bda2b44ab63863cac368b41","room":"Room 2","parent":"5bd8f85b2c8ad829dcc3f091","ip":"192.168.1.105"}}}

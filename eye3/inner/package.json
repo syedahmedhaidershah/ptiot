@@ -1,0 +1,19 @@
+{
+  "name": "inner",
+  "version": "1.0.0",
+  "description": "eye for pt workstation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "Syed Ahmed Haider Shah",
+  "license": "ISC",
+  "dependencies": {
+    "face-recognition": "^0.9.3",
+    "nodemon": "^1.18.6",
+    "opencv4nodejs": "^4.10.0",
+    "screenshot-stream": "^4.2.0"
+  }
+}

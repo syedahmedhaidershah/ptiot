@@ -1,0 +1,1 @@
+Error: UNKNOWN: unknown error, open 'F:\backups\Repo\api\cam\rtsp_stream\raw\1.jpg'

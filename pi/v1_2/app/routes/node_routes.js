@@ -170,7 +170,11 @@ module.exports = function(app, db) {
 							o.forEach(function(thisobj){
 								response[iterator.toString()] = parseInt(thisobj.name.split(" ")[1]);
 								iterator++;
-								response[iterator.toString()] = parseInt(thisobj.attr.current);
+								if (!thisobj.state || thisobj.attr.current == 0){
+									response[iterator.toString()] = "0";
+								} else {
+									response[iterator.toString()] = parseInt(thisobj.attr.current);
+								}
 								iterator++;
 							});
 							res.send(response);
@@ -184,6 +188,8 @@ module.exports = function(app, db) {
 	});
 
 	app.post("/test", (req,res) => {
+		console.log("here");
+		console.log(req.body);
 		res.sendStatus(200);
 	});
 

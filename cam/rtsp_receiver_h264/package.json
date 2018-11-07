@@ -1,0 +1,25 @@
+{
+  "name": "cam",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ffmpeg": "0.0.4",
+    "fluent-ffmpeg": "^2.1.2",
+    "jsmpeg": "^1.0.0",
+    "nimble": "0.0.2",
+    "rtsp-stream": "^1.0.0",
+    "sdp-transform": "^1.4.0",
+    "websocket": "^1.0.28",
+    "yellowstone": "^2.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}

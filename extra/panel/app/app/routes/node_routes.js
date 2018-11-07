@@ -50,7 +50,7 @@ module.exports = function (app, db) {
 	        password: null
 	    }
         let usedate = md5(new Date().getTime() + wifiObj.toString());
-	    newWiFi.ssid = usedate.substr(0,3).concat('-').concat(usedate.substr(3,4)).toUpperCase();
+	    newWiFi.ssid = usedate.substr(0,7).toUpperCase();
         newWiFi.password = usedate.substr(-8).toUpperCase();
         db.collection("wifis").insertOne(newWiFi, (err, inserted) => {
             if (err) {

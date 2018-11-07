@@ -1,90 +1,78 @@
-#include <ArduinoJson.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
-#include <ESP8266WebServer.h>
 
-String dooruino = "5bcb0a5a3b78253d44e2bbb9";
+String dooruino = "5bddb58491749e5fc007c2d3";
 
-const char *ssid = "Pulsate Technologies Node"; //AP Name (Server Name)
-const char *password = "pulsatemay24";          //Set wifi password
+const char *ssid = "C05F4F2"; //AP Name (Server Name)
+const char *password = "7307563B";          //Set wifi password
 HTTPClient http;
-ESP8266WebServer server;
-
 int port = 9899;
-String httpIp = "192.168.1.102";
+String httpIp = "192.168.1.100";
 
 // temperature
-#define MAX6675_CS 10
-#define MAX6675_SO 12
-#define MAX6675_SCK 13
+const int max6675_cs = D0;
+const int max6675_so = D1;
+const int max6675_sck = D2;
 int temperature = 0;
-long int iterator = 0;
-
-//buffers
-StaticJsonBuffer<200> jsonBuffer;
-char json[] = "{}";
-int wit = 0;
+int iterator = 0;
 
 // PIR management
-int calibrationTime = 15000;
-long unsigned int lowIn;
-long unsigned int pause = 2500;
+int calibrationTime = 1000;
+int lowIn;
+int pause = 2500;
 int readPause = 5000;
 
-int pirPin1 = 5; // out
-int pirPin2 = 6; // in
-
-char buffer[48];
-
-void onState()
-{
-  Serial.println("Someone entered the room");
-}
-
-void offState()
-{
-  Serial.println("Someone left the room");
-}
+int pirPin1 = D3; // out
+int pirPin2 = D4; // in
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(pirPin1, INPUT);
   pinMode(pirPin2, INPUT);
-  digitalWrite(pirPin1, LOW);
 
-  //give the sensor some time to calibrate
-  Serial.print("calibrating sensor ");
   delay(calibrationTime);
-  Serial.println(" done");
-  Serial.println("SENSORS ACTIVE");
-  delay(50);
 
-  Serial.begin(115200); /* begin serial for debug */
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(500);
   }
-  server.on("/", []() {
-    server.send(200, "application/json", "{\"msg\" : \"systemok.\", \"key\":\"" + dooruino + "\"}");
-  });
-  server.begin();
+  delay(100);
+}
+
+void sendRequest(String msg) {
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    Serial.println("here1");
+    WiFi.begin(ssid, password);
+    delay(500);
+  }
+  else
+  {
+    http.begin(httpIp, port, "/dooruino");
+    http.addHeader("Content-Type", "application/json");
+    http.POST(msg);
+    delay(100);
+    iterator++;
+  }
+  delay(10);
 }
 
 void loop()
 {
-  server.handleClient();
   if (digitalRead(pirPin1) || digitalRead(pirPin2))
   {
+    delay(100);
     if (digitalRead(pirPin1))
     {
       for (; digitalRead(pirPin1);)
       {
-        onState();
         if (digitalRead(pirPin2))
         {
+          String msg = "{\"key\": \"" + dooruino + "\", \"type\":\"dooruino\", \"command\":\"roomentered\"}";
+          sendRequest(msg);
           delay(readPause);
         }
       }
@@ -95,46 +83,29 @@ void loop()
       {
         if (digitalRead(pirPin1))
         {
-          onState();
+          String msg = "{\"key\": \"" + dooruino + "\", \"type\":\"dooruino\", \"command\":\"roomleft\"}";
+          sendRequest(msg);
           delay(readPause);
         }
       }
     }
     else
-    {
-      offState();
+    { 
+      String msg = "{\"key\": \"" + dooruino + "\", \"type\":\"dooruino\", \"command\":\"none\"}";
+      sendRequest(msg);
     }
   }
-  if (WiFi.status() != WL_CONNECTED)
-  {
-    WiFi.begin(ssid, password);
-    delay(500);
-  }
-  else
-  {
-    if (iterator % 10 == 0)
-    {
-      String msg = "{\"key\": \"" + dooruino + "\", \"type\":\"dooruino\"}";
-      http.begin(httpIp, port, "/test");
-      http.addHeader("Content-Type", "application/json");
-      http.POST(msg);
-
-      delay(100);
-    }
-    iterator++;
-  }
-  delay(10);
 }
 
 double readThermocouple()
 {
 
   uint16_t v;
-  pinMode(MAX6675_CS, OUTPUT);
-  pinMode(MAX6675_SO, INPUT);
-  pinMode(MAX6675_SCK, OUTPUT);
+  pinMode(max6675_cs, OUTPUT);
+  pinMode(max6675_so, INPUT);
+  pinMode(max6675_sck, OUTPUT);
 
-  digitalWrite(MAX6675_CS, LOW);
+  digitalWrite(max6675_cs, LOW);
   delay(1);
 
   // Read in 16 bits,
@@ -143,11 +114,11 @@ double readThermocouple()
   //  2     = 1 if thermocouple is open circuit
   //  1..0  = uninteresting status
 
-  v = shiftIn(MAX6675_SO, MAX6675_SCK, MSBFIRST);
+  v = shiftIn(max6675_so, max6675_sck, MSBFIRST);
   v <<= 8;
-  v |= shiftIn(MAX6675_SO, MAX6675_SCK, MSBFIRST);
+  v |= shiftIn(max6675_so, max6675_sck, MSBFIRST);
 
-  digitalWrite(MAX6675_CS, HIGH);
+  digitalWrite(max6675_cs, HIGH);
   if (v & 0x4)
   {
     // Bit 2 indicates if the thermocouple is disconnected
