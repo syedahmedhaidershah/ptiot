@@ -42,9 +42,9 @@ function writingAllow(err, numFaces){
 				});
 				if(second < 3){
 					console.log("closing devices | local objects ="+second);
-					request.post("http://192.168.1.100:9899/closedevices", function (error, response, body) {
+					// request.post("http://192.168.1.100:9899/closedevices", function (error, response, body) {
 						writing = false;
-					});
+					// });
 				} else {
 					try {
 						console.log("turning devices on");
@@ -95,19 +95,19 @@ var uri = "rtsp://admin:pulsatemay24@192.168.1.108/cam/realmonitor?channel=1&sub
 var stream = new rtsp.FFMpeg({ input: uri });
 io.on("connection", function (socket) {
 	var pipeStream = function (data) {
-		if (pc > 200) {
-			pc = 0;
-			stream = null;
-			stream = new rtsp.FFMpeg({ input: uri });
-			stream.on("data", pipeStream);
-		}
+		// if (pc > 200) {
+		// 	pc = 0;
+		// 	stream = null;
+		// 	stream = new rtsp.FFMpeg({ input: uri });
+		// 	stream.on("data", pipeStream);
+		// }
 		socket.emit("data", data.toString("base64"));
 		let writable = data;
 		try {
 			// let path = new Date().getTime();
 			if (!writing) {
 				writing = true;
-				console.log("written packet :" + pc); pc += 1;
+				// console.log("written packet :" + pc); pc += 1;
 				fs.writeFile("./raw/1.jpg", writable, (err) => {
 					if (err) {
 						reset();

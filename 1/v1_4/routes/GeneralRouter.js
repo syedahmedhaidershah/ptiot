@@ -5,10 +5,10 @@ var md5 = require("md5");
 
 module.exports = function (app, db) {
 	// route for logging in a user
-	app.post("/login/:username&:password", (req, res) => {
+	app.post("/login/", (req, res) => {
 		const username = req.body.username;
 		const password = req.body.password;
-		const uIns = { "username": username };
+		const uIns = { "username": username, "password": password};
 		db.collection("creds").findOne(uIns, (err, item) => {
 			if (item != null) {
 				if (err) {
@@ -200,7 +200,7 @@ module.exports = function (app, db) {
         let id = req.body._id;
         let current = parseInt(req.body.current);
         let myquery = { _id: new ObjectId(id) };
-        let pushquery = { $set: { attr: { current: current } } };
+        let pushquery = { $set: { "attr.current": current } };
         if (current == 0) {
             pushquery.$set.state = false;
         } else {
