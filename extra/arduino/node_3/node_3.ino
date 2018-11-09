@@ -13,7 +13,8 @@ const int s21 = D3;
 const int s22 = D4;
 const int s23 = D5;
 
-String arduino = "5bddb58491749e5fc007c2d2";
+//String arduino = "5bddb58491749e5fc007c2d2";
+String arduino = "5bddb58491749e5fc007c2d3";
 
 int iterator = 0;
 int port = 9899;
@@ -26,15 +27,10 @@ const int max6675_so = D8;
 int temperature = 0;
 double highest = 25;
 
+int states = [0,0];
+
 void setup()
 {
-  Serial.begin(115200);
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-  }
   pinMode(s11, OUTPUT);
   pinMode(s12, OUTPUT);
   pinMode(s13, OUTPUT);
@@ -44,6 +40,13 @@ void setup()
   pinMode(max6675_cs, OUTPUT);
   pinMode(max6675_so, INPUT);
   pinMode(max6675_sck, OUTPUT);
+  Serial.begin(115200);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+  }
   digitalWrite(max6675_cs, HIGH);
   digitalWrite(max6675_sck, LOW);
   digitalWrite(s11, HIGH);
@@ -67,71 +70,99 @@ void loop()
     {
       double temperature = readThermocouple();
       if (temperature < 1000 && temperature != 0) {
-//        if(abs(temperature - highest) < 10){
-          highest = temperature; 
-//        }
+        //        if(abs(temperature - highest) < 10){
+        highest = temperature;
+        //        }
       }
       String msg = "{\"key\": \"" + arduino + "\", \"type\":\"controller\", \"temperature\":\"" + String(highest) + "\"}";
       http.begin(httpIp, port, "/getstates");
       http.addHeader("Content-Type", "application/json");
-      http.POST(msg);
+      int code = http.POST(msg);
       String response = http.getString();
+      http.end();
+      ////////////////////////////////////////////////////
+      Serial.println("Status code "+String(code));
+      ////////////////////////////////////////////////////
       StaticJsonBuffer<100> jsonBuffer;
       char res[100];
       response.toCharArray(res, 100);
       JsonObject& root = jsonBuffer.parseObject(res);
-      if ((int)root["0"] == 6) {
-        switch ((int)root["1"]) {
-          case 0:
+      //      if ((int)root["0"] == 6) {
+      switch ((int)root["0"]) {
+        case 0:
+          if(states[0] != 0){
             digitalWrite(s11, HIGH);
             digitalWrite(s12, HIGH);
             digitalWrite(s13, HIGH);
-            break;
-          case 1:
+            states[0] = 0;
+          }
+          break;
+        case 1:
+          if(states[0] != 1){
+            digitalWrite(s12, HIGH);
+            digitalWrite(s13, HIGH);
             digitalWrite(s11, LOW);
-            digitalWrite(s12, HIGH);
-            digitalWrite(s13, HIGH);
-            break;
-          case 2:
+            states[0] = 1;
+          }
+          break;
+        case 2:
+          if(states[0] != 2){
             digitalWrite(s11, HIGH);
-            digitalWrite(s12, LOW);
             digitalWrite(s13, HIGH);
-            break;
-          case 3:
+            digitalWrite(s12, LOW);
+            states[0] = 2;
+          }
+          break;
+        case 3:
+          if(states[0] != 3){
             digitalWrite(s11, HIGH);
             digitalWrite(s12, HIGH);
             digitalWrite(s13, LOW);
-            break;
-          default:
-            break;
-        }
+            states[0] = 3;
+          }
+          break;
+        default:
+          break;
       }
-      if ((int)root["0"] == 7) {
-        switch ((int)root["3"]) {
-          case 0:
+      //      }
+      //      if ((int)root["0"] == 7) {
+      switch ((int)root["1"]) {
+       case 0:
+          if(states[0] != 0){
             digitalWrite(s21, HIGH);
             digitalWrite(s22, HIGH);
             digitalWrite(s23, HIGH);
-            break;
-          case 1:
+            states[0] = 0;
+          }
+          break;
+        case 1:
+          if(states[0] != 1){
             digitalWrite(s22, HIGH);
             digitalWrite(s23, HIGH);
             digitalWrite(s21, LOW);
-            break;
-          case 2:
+            states[0] = 1;
+          }
+          break;
+        case 2:
+          if(states[0] != 2){
             digitalWrite(s21, HIGH);
             digitalWrite(s23, HIGH);
             digitalWrite(s22, LOW);
-            break;
-          case 3:
+            states[0] = 2;
+          }
+          break;
+        case 3:
+          if(states[0] != 3){
             digitalWrite(s21, HIGH);
             digitalWrite(s22, HIGH);
             digitalWrite(s23, LOW);
-            break;
-          default:
-            break;
-        }
+            states[0] = 3;
+          }
+          break;
+        default:
+          break;
       }
+      //      }
       delay(100);
     }
     iterator++;

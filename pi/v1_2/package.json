@@ -4,29 +4,31 @@
   "description": "An endpoint application by Pulsate Technologies running on pi for ptiot",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js --verbose -e js,mjs"
   },
   "nodemonConfig": {
     "ignore": [
       "config/rooms.json",
       "config/devices.json",
-      "config/sensors.json"
+      "config/sensors.json",
+      "config/commit.json"
     ]
   },
   "author": "Syed Ahmed Haider Shah",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "express": "^4.15.2",
+    "express": "^4.16.4",
     "jsonfile": "^4.0.0",
     "md5": "^2.2.1",
-    "mongodb": "^3.1.4",
+    "mongodb": "^3.1.8",
     "readline": "^1.3.0",
+    "request": "^2.88.0",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
     "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.3"
+    "nodemon": "^1.18.5"
   }
 }

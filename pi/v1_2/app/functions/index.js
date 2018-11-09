@@ -5,7 +5,6 @@ const sensorsLoc = "./config/sensors.json";
 var shift = 0, enternow = true, totalCollections = 2;
 
 module.exports = {
-	db: null,
 	retreiveIdsFromObjArray: function(arr){
 		var newArray = [];
 		arr.forEach(function(k){
@@ -13,88 +12,114 @@ module.exports = {
 		});
 		return newArray;
 	},
-	dbinterval : function(db){
-		module.exports.db = db;
-		const query1 = { parent : ObjectId(global.prefExtern.object.instance) };
+	dbinterval : function(){
         
 		setInterval(function(){
 			if(enternow){
 				switch(shift){
-				case 0:
-					enternow = false;
-					module.exports.syncCollection("devices", devicesLoc, query1);
-					break;
-				case 1:
-					enternow = false;
-					module.exports.syncCollection("sensors", sensorsLoc, query1);
-					break;
-				default:
-					break;
+					case 0:
+						// enternow = false;
+						module.exports.syncCollection("devices", devicesLoc);
+						break;
+					case 1:
+						// enternow = false;
+						module.exports.syncCollection("sensors", sensorsLoc);
+						break;
+					default:
+						break;
 				}
 			}
 		}, 1000);
 	},
-	syncCollection: function(collection, jsonLoc, useQuery){
-		var collectionIns = module.exports.db.collection(collection).find(useQuery);
-		collectionIns.count().then(function(c){
-			if(c != 0){
-				collectionIns.toArray().then(function(k){
-					var n = module.exports.retreiveIdsFromObjArray(k);
-					jsonFile.readFile(jsonLoc, (err, obj) => {
-						if(err){
-							console.log(err);
-						} else {
-							var insIds = module.exports.retreiveIdsFromObjArray(obj[collection]);
-							n.forEach(function(o){
-								if(insIds.indexOf(o) == -1){
-									var writeJson = {};
-									writeJson[collection] = k;
-									jsonFile.writeFile(jsonLoc, writeJson, (err) => {
+	syncCollection: function(collection, loc){
+		Object.keys(global.rooms).forEach(function(o){
+			if(global.rooms[o].hasOwnProperty("_id")){
+				global.database.collection(collection).find({parent: ObjectId(global.rooms[o]._id)} ).toArray().then(function(arr){
+					arr.forEach(function(doc){
+						if(!global.devices.devices.hasOwnProperty(global.rooms[o]._id)){
+							global.devices.devices[global.rooms[o]._id] = {};
+							global.devices.devices[global.rooms[o]._id][doc._id] = doc;
+							jsonFile.readFile(devicesLoc, (err,obj) => {
+								if(err){
+									console.log(err);
+								} else {
+									obj.devices[global.rooms[o]._id] = {};
+									obj.devices[global.rooms[o]._id][doc._id] = doc;
+									jsonFile.writeFile(devicesLoc, obj, (err, obj) => {
 										if(err){
 											console.log(err);
 										} else {
 											enternow = true;
-											if(shift < totalCollections - 1 ){
-												shift ++;
-											} else {
-												shift = 0;
-											}
+											// shift != shift;
 										}
 									});
-								} else {
-									enternow = true;
-									if(shift < totalCollections - 1 ){
-										shift ++;
-									} else {
-										shift = 0;
-									}
 								}
 							});
+						} else if(global.devices.devices[global.rooms[o]._id].hasOwnProperty(doc._id)){
+							if(global.devices.devices[global.rooms[o]._id][doc._id].hasOwnProperty("state")){
+								if(global.devices.devices[global.rooms[o]._id][doc._id].state != doc.state){
+									global.devices.devices[global.rooms[o]._id][doc._id] = doc;
+									jsonFile.readFile(devicesLoc, (err,obj) => {
+										if(err){
+											console.log(err);
+										} else {
+											obj.devices[global.rooms[o]._id][doc._id] = doc;
+											jsonFile.writeFile(devicesLoc, obj, (err, obj) => {
+												if(err){
+													console.log(err);
+												} else {
+													enternow = true;
+													// shift != shift;
+												}
+											});
+										}
+									});
+								}
+								if(global.devices.devices[global.rooms[o]._id][doc._id].attr.hasOwnProperty("current")){
+									if(global.devices.devices[global.rooms[o]._id][doc._id].attr.current != doc.attr.current){
+										global.devices.devices[global.rooms[o]._id][doc._id].attr.current = doc.attr.current;
+										jsonFile.readFile(devicesLoc, (err,obj) => {
+											if(err){
+												console.log(err);
+											} else {
+												obj.devices[doc._id].attr.current = doc.attr.current;
+												jsonFile.writeFile(devicesLoc, obj, (err, obj) => {
+													if(err){
+														console.log(err);
+													} else {
+														enternow = true;
+														// shift != shift;
+													}
+												});
+											}
+										});
+									}
+								}
+							}
+						} else if(!global.devices.devices[global.rooms[o]._id].hasOwnProperty(doc._id)){
+							global.devices.devices[global.rooms[o]._id][doc._id] = doc;
+							if(global.devices.devices[global.rooms[o]._id][doc._id].state != doc.state){
+								global.devices.devices[global.rooms[o]._id][doc._id] = doc;
+								jsonFile.readFile(devicesLoc, (err,obj) => {
+									if(err){
+										console.log(err);
+									} else {
+										obj.devices[global.rooms[o]._id][doc._id] = doc;
+										jsonFile.writeFile(devicesLoc, obj, (err, obj) => {
+											if(err){
+												console.log(err);
+											} else {
+												enternow = true;
+												// shift != shift;
+											}
+										});
+									}
+								});
+							}
 						}
 					});
 				});
-			} else {
-				var writeJson = {};
-				writeJson[collection] = [];
-				jsonFile.writeFile(jsonLoc, writeJson, (err) => {
-					if(err){
-						console.log(err);
-						enternow = true;
-						if(shift < totalCollections - 1 ){
-							shift ++;
-						} else {
-							shift = 0;
-						}
-					} else {
-						enternow = true;
-						if(shift < totalCollections - 1 ){
-							shift ++;
-						} else {
-							shift = 0;
-						}
-					}
-				});
 			}
-		});
+		})
 	}
 };

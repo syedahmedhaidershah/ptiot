@@ -28,7 +28,7 @@ String message = "";
 bool states[] = {HIGH, HIGH, HIGH, HIGH, HIGH, HIGH};
 
 void setup() {
-  //  Serial.begin(115200); /* begin serial for debug */
+  Serial.begin(115200);
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
@@ -110,6 +110,7 @@ void loop() {
       http.begin(httpIp, port, "/arduinoRegister");
       http.addHeader("Content-Type", "application/json");
       http.POST(msg);
+      http.end();
       initializer = true;
       delay(1000);
     }
@@ -118,34 +119,38 @@ void loop() {
       String msg = "{\"key\": \"" + arduino + "\", \"type\":\"arduino\"}";
       http.begin(httpIp, port, "/reviveArduino");
       http.addHeader("Content-Type", "application/json");
-      http.POST(msg);
-      StaticJsonBuffer<200> jsonBuffer;
-      JsonObject& root = jsonBuffer.parseObject(http.getString());
-      if (states[0] == (bool)((int) root["0"])) {
-        states[0] = !(bool)((int) root["0"]);
-        digitalWrite(relay1, states[0]);
+      int code = http.POST(msg);
+      String response = http.getString();
+      http.end();
+      if(response == 200){
+        StaticJsonBuffer<200> jsonBuffer;
+        JsonObject& root = jsonBuffer.parseObject(response);
+        if (states[0] == (bool)((int) root["0"])) {
+          states[0] = !(bool)((int) root["0"]);
+          digitalWrite(relay1, states[0]);
+        }
+        if (states[1] == (bool)((int) root["1"])) {
+          states[1] = !(bool)((int) root["1"]);
+          digitalWrite(relay2, states[1]);
+        }
+        if (states[2] == (bool)((int) root["2"])) {
+          states[2] = !(bool)((int) root["2"]);
+          digitalWrite(relay3, states[2]);
+        }
+        if (states[3] == (bool)((int) root["3"])) {
+          states[3] = !(bool)((int) root["3"]);
+          digitalWrite(relay4, states[3]);
+        }
+        if (states[4] == (bool)((int) root["4"])) {
+          states[4] = !(bool)((int) root["4"]);
+          digitalWrite(relay5, states[4]);
+        }
+        if (states[5] == (bool)((int) root["5"])) {
+          states[5] = !(bool)((int) root["5"]);
+          digitalWrite(relay6, states[5]);
+        }
+        delay(100);
       }
-      if (states[1] == (bool)((int) root["1"])) {
-        states[1] = !(bool)((int) root["1"]);
-        digitalWrite(relay2, states[1]);
-      }
-      if (states[2] == (bool)((int) root["2"])) {
-        states[2] = !(bool)((int) root["2"]);
-        digitalWrite(relay3, states[2]);
-      }
-      if (states[3] == (bool)((int) root["3"])) {
-        states[3] = !(bool)((int) root["3"]);
-        digitalWrite(relay4, states[3]);
-      }
-      if (states[4] == (bool)((int) root["4"])) {
-        states[4] = !(bool)((int) root["4"]);
-        digitalWrite(relay5, states[4]);
-      }
-      if (states[5] == (bool)((int) root["5"])) {
-        states[5] = !(bool)((int) root["5"]);
-        digitalWrite(relay6, states[5]);
-      }
-      delay(100);
     }
     iterator++;
   }
